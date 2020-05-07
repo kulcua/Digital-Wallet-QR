@@ -1,6 +1,6 @@
 # moneymanagement
 
-My fisrt flutter  app 
+My first flutter  app 
 
 ## Getting Started
 
