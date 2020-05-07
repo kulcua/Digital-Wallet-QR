@@ -1,4 +1,4 @@
-# moneymanagement
+# Flutter Authentication (Firebase Auth Email)
 
 My first flutter  app 
 
