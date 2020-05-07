@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "450693195501",
+    "firebase_url": "https://digital-wallet-qr.firebaseio.com",
+    "project_id": "digital-wallet-qr",
+    "storage_bucket": "digital-wallet-qr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450693195501:android:b951f5a6854beadef6cee4",
+        "android_client_info": {
+          "package_name": "com.example.moneymanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "450693195501-06jour15f1813p705399si0iab5r9fpe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz6Bm9tWIyjOeI1P8_Ig0Vv8isT0ue6HE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "450693195501-06jour15f1813p705399si0iab5r9fpe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
