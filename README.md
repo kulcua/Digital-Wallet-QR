@@ -1,6 +1,6 @@
-# moneymanagement
+# Flutter Authentication (Firebase Auth Email)
 
-My fisrt flutter  app 
+My first flutter  app 
 
 ## Getting Started
 
