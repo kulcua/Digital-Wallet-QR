@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:moneymangement/authen/signin.dart';
 import 'package:moneymangement/authen/signup.dart';
 
-class Authen extends StatefulWidget {
+class Authentication extends StatefulWidget {
   @override
-  _AuthenState createState() => _AuthenState();
+  _AuthenticationState createState() => _AuthenticationState();
 }
 
-class _AuthenState extends State<Authen> {
+class _AuthenticationState extends State<Authentication> {
   bool showSignIn = true;
 
   void toggleView(){

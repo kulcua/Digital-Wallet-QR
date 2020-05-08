@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneymangement/push_notification.dart';
 import 'package:moneymangement/services/auth.dart';
 
 class SignIn extends StatefulWidget {
@@ -13,6 +14,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
 
   final AuthServices _auth = AuthServices();
+  final PushNotificationsManager _noti = PushNotificationsManager();
 
   String email = '';
   String password = '';
@@ -79,6 +81,7 @@ class _SignInState extends State<SignIn> {
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 60.0),
               color: Colors.blue,
               onPressed: () async {
+                _noti.init();
                 print(email);
                 print(password);
               },
