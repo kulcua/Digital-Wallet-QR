@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              margin: EdgeInsets.symmetric(vertical: 25.0, horizontal: 20.0),
               child: TextFormField(
                 validator: (val) => val.isEmpty ? 'Enter an email' : null,
                 onChanged: (val) {
@@ -58,7 +58,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              margin: EdgeInsets.symmetric(vertical: 25.0, horizontal: 20.0),
               child: TextFormField(
                 validator: (val) => val.length < 6
                     ? 'Password must be than 6 characters'
