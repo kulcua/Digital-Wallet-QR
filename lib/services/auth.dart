@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:moneymangement/authen/signin.dart';
 import 'package:moneymangement/module/user.dart';
+import 'package:moneymangement/services/database.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  //String verificationId;
 
   // create obj base on Firebase User
   User _userFormFirebaseUser(FirebaseUser user) {
@@ -29,7 +32,8 @@ class AuthServices {
 //sign in email/pass
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser user = result.user;
       return _userFormFirebaseUser(user);
     } catch (e) {
@@ -50,6 +54,34 @@ class AuthServices {
       return null;
     }
   }
+
+  //register phone
+//  Future<void> verifyPhone(phoneNo) async {
+//    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
+//      //To Do
+//    };
+//
+//    final PhoneVerificationFailed verificationFailed =
+//        (AuthException authException) {
+//      print('${authException.message}');
+//    };
+//
+//    final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
+//       this.verificationId = verId;
+//    };
+//
+//    final PhoneCodeAutoRetrievalTimeout autoTimeout(String verId){
+//      this.verificationId = verId;
+//    };
+//
+//    await FirebaseAuth.instance.verifyPhoneNumber(phoneNumber: phoneNo,
+//        timeout: const Duration(seconds: 5),
+//        verificationCompleted: verified,
+//        verificationFailed: verificationFailed,
+//        codeSent: smsSent,
+//        codeAutoRetrievalTimeout: autoTimeout);
+//  }
+
 
 //sign out
   Future signOut() async {
