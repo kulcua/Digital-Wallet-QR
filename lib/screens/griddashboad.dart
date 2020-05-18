@@ -1,29 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:moneymangement/screens/setting_page.dart';
-import 'scanning_page.dart';
+import 'package:moneymangement/screens/createQR.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
 class GridDashboard extends StatelessWidget {
 
   Item item1 = new Item(
-    title: 'Create',
+    title: 'Mã QR',
     img: 'images/qrcode.png',
   );
 
   Item item2 = new Item(
-    title: 'Scan',
+    title: 'Quét QR',
     img: 'images/qrscan.png',
   );
 
   Item item3 = new Item(
-    title: 'Top Up',
+    title: 'Nạp tiền',
     img: 'images/coin.png',
   );
 
   Item item4 = new Item(
-    title: 'Wallet',
+    title: 'Thẻ',
     img: 'images/wallet.png',
   );
 
@@ -36,13 +35,13 @@ class GridDashboard extends StatelessWidget {
         padding: EdgeInsets.only(left: 16, right: 16),
         crossAxisCount: 2,
         crossAxisSpacing: 18,
-        mainAxisSpacing: 8,
+        mainAxisSpacing: 18,
         children: myItem.map((data){
           return GestureDetector(
             onTap: () async {
-              if (data.title == 'Create')
-              Navigator.push(context,MaterialPageRoute(builder: (context)=> Setting()));
-              else if (data.title == 'Scan') {
+              if (data.title == 'Mã QR')
+              Navigator.push(context,MaterialPageRoute(builder: (context)=> CreateQR()));
+              else if (data.title == 'Quét QR') {
                 scanner.scan();
               }
 //              else if (data.title == 'Top Up')

@@ -37,11 +37,11 @@ class _SignUpState extends State<SignUp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Register',
+              'Đăng kí',
               style: TextStyle(
                 fontFamily: 'Source Sans Pro',
                 fontSize: 40.0,
-                color: Colors.blue,
+                color: Color(0xff7d5a5a),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -49,13 +49,13 @@ class _SignUpState extends State<SignUp> {
               height: 20.0,
               width: 150.0,
               child: Divider(
-                color: Colors.blue,
+                color: Color(0xff7d5a5a),
               ),
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
               child: TextFormField(
-                validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                validator: (val) => val.isEmpty ? 'Nhập email' : null,
                 onChanged: (val) {
                   setState(() => email = val);
                 },
@@ -69,7 +69,7 @@ class _SignUpState extends State<SignUp> {
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
               child: TextFormField(
                 validator: (val) => val.length < 6
-                    ? 'Password must be than 6 characters'
+                    ? 'Mật khẩu phải hơn 6 kí tự'
                     : null,
                 onChanged: (val) {
                   setState(() => password = val);
@@ -77,7 +77,7 @@ class _SignUpState extends State<SignUp> {
                 obscureText: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Password',
+                  labelText: 'Mật khẩu',
                 ),
               ),
             ),
@@ -86,7 +86,7 @@ class _SignUpState extends State<SignUp> {
               child: TextFormField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Full name',
+                  labelText: 'Tên của bạn',
                 ),
                 onChanged: (val) {
                   setState(() => name = val);
@@ -99,7 +99,7 @@ class _SignUpState extends State<SignUp> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Phone number',
+                  labelText: 'Số điện thoại',
                 ),
                 onChanged: (val) {
                   setState(() => phone = val);
@@ -108,20 +108,20 @@ class _SignUpState extends State<SignUp> {
             ),
             RaisedButton(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 60.0),
-              color: Colors.blue,
+              color: Color(0xff7d5a5a),
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   dynamic result =
                       await _auth.registerWithEmailAndPassword(context, email, password, name, money, phone);
                   if (result == null) {
                     setState(() {
-                      error = 'Please supply a valid email';
+                      error = 'Email không tồn tại';
                     });
                   }
                 }
               },
               child: Text(
-                "Register",
+                "Đăng kí",
                 style: TextStyle(
                     fontSize: 17.0,
                     fontFamily: 'Source Sans Pro',
@@ -129,7 +129,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             FlatButton(
-              child: Text('Sign in'),
+              child: Text('Đăng nhập'),
               onPressed: () {
                 widget.toggleView();
               },

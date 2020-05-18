@@ -8,10 +8,6 @@ import 'griddashboad.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MainPage extends StatefulWidget {
-//  final String currentUserId;
-//  final String userId;
-//
-//  MainPage({this.currentUserId, this.userId});
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -29,7 +25,7 @@ class _MainPageState extends State<MainPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Hello again,',
+                  'Xin chào,',
                   style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                     color: Color(0xff7d5a5a),
@@ -62,7 +58,7 @@ class _MainPageState extends State<MainPage> {
                   )),
                 ),
                 Text(
-                  'in your account',
+                  'VND',
                   style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                       color: Color(0xff7d5a5a),

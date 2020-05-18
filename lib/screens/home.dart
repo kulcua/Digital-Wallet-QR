@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfffaf2f2),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: PageView(
           controller: _pageController,
@@ -56,25 +56,25 @@ class _HomeState extends State<Home> {
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
               icon: Icon(Icons.home, color: Color(0xff7d5a5a)),
-              title: Text('Home', style: TextStyle(color: Color(0xff7d5a5a))),
+              title: Text('Trang chủ', style: TextStyle(color: Color(0xff7d5a5a))),
               activeColor: Color(0xfff1d1d1)
           ),
           BottomNavyBarItem(
               icon: Icon(Icons.access_time, color: Color(0xff7d5a5a)),
               title:
-              Text('History', style: TextStyle(color: Color(0xff7d5a5a))),
+              Text('Giao dịch', style: TextStyle(color: Color(0xff7d5a5a))),
               activeColor: Color(0xfff1d1d1)
           ),
           BottomNavyBarItem(
               icon: Icon(Icons.account_circle, color: Color(0xff7d5a5a)),
               title:
-              Text('Account', style: TextStyle(color: Color(0xff7d5a5a))),
+              Text('Tài khoản', style: TextStyle(color: Color(0xff7d5a5a))),
               activeColor: Color(0xfff1d1d1)
           ),
           BottomNavyBarItem(
               icon: Icon(Icons.settings, color: Color(0xff7d5a5a)),
               title:
-              Text('Setting', style: TextStyle(color: Color(0xff7d5a5a))),
+              Text('Cài đặt', style: TextStyle(color: Color(0xff7d5a5a))),
               activeColor: Color(0xfff1d1d1)
           ),
         ],
