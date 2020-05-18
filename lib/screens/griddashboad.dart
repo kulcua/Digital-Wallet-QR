@@ -1,29 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'history_page.dart';
+import 'package:moneymangement/screens/setting_page.dart';
 import 'scanning_page.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 class GridDashboard extends StatelessWidget {
 
   Item item1 = new Item(
-    title: "Create",
-    img: "assets/qrcode.png",
+    title: 'Create',
+    img: 'images/qrcode.png',
   );
 
   Item item2 = new Item(
-    title: "Scan",
-    img: "assets/qrscan.png",
+    title: 'Scan',
+    img: 'images/qrscan.png',
   );
 
   Item item3 = new Item(
-    title: "Top Up",
-    img: "assets/coin.png",
+    title: 'Top Up',
+    img: 'images/coin.png',
   );
 
   Item item4 = new Item(
-    title: "Wallet",
-    img: "assets/wallet.png",
+    title: 'Wallet',
+    img: 'images/wallet.png',
   );
 
   @override
@@ -39,7 +40,15 @@ class GridDashboard extends StatelessWidget {
         children: myItem.map((data){
           return GestureDetector(
             onTap: () async {
-              Navigator.push(context,MaterialPageRoute(builder: (context)=> Scanning()));
+              if (data.title == 'Create')
+              Navigator.push(context,MaterialPageRoute(builder: (context)=> Setting()));
+              else if (data.title == 'Scan') {
+                scanner.scan();
+              }
+//              else if (data.title == 'Top Up')
+//                Navigator.push(context,MaterialPageRoute(builder: (context)=> Scanning()));
+//              else if (data.title == 'Wallet')
+//                Navigator.push(context,MaterialPageRoute(builder: (context)=> Scanning()));
             },
             child: Container(
                 decoration: BoxDecoration(color: Color(0xfff1d1d1), borderRadius: BorderRadius.circular(10.0)),

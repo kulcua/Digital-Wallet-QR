@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xfffaf2f2),
-      body: SizedBox.expand(
+      body: SafeArea(
         child: PageView(
           controller: _pageController,
           onPageChanged: (index) {
