@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/screens/createQR.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:moneymangement/screens/transaction.dart';
 
 class GridDashboard extends StatelessWidget {
 
@@ -42,7 +43,14 @@ class GridDashboard extends StatelessWidget {
               if (data.title == 'Mã QR')
               Navigator.push(context,MaterialPageRoute(builder: (context)=> CreateQR()));
               else if (data.title == 'Quét QR') {
-                scanner.scan();
+                String re_qrcode = await scanner.scan();
+                if(re_qrcode == null)
+                  print('null r');
+                else {
+                  print('resulltnenenene$re_qrcode');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Transaction()));
+                }
               }
 //              else if (data.title == 'Top Up')
 //                Navigator.push(context,MaterialPageRoute(builder: (context)=> Scanning()));
@@ -58,7 +66,7 @@ class GridDashboard extends StatelessWidget {
                     SizedBox(height: 14,),
                     Text(data.title, style: GoogleFonts.openSans(
                         textStyle: TextStyle(
-                          color: Color(0xff7d5a5a),
+                          color: Colors.brown[800],
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         )

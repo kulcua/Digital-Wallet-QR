@@ -55,31 +55,27 @@ class _HomeState extends State<Home> {
         backgroundColor: Color(0xfffaf2f2),
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-              icon: Icon(Icons.home, color: Color(0xff7d5a5a)),
-              title: Text('Trang chủ', style: TextStyle(color: Color(0xff7d5a5a))),
-              activeColor: Color(0xfff1d1d1)
-          ),
+              icon: Icon(Icons.home, color: Colors.brown[800]),
+              title: Text('Trang chủ',
+                  style: TextStyle(color: Colors.brown[800])),
+              activeColor: Color(0xfff1d1d1)),
           BottomNavyBarItem(
-              icon: Icon(Icons.access_time, color: Color(0xff7d5a5a)),
-              title:
-              Text('Giao dịch', style: TextStyle(color: Color(0xff7d5a5a))),
-              activeColor: Color(0xfff1d1d1)
-          ),
+              icon: Icon(Icons.access_time, color: Colors.brown[800]),
+              title: Text('Giao dịch',
+                  style: TextStyle(color: Colors.brown[800])),
+              activeColor: Color(0xfff1d1d1)),
           BottomNavyBarItem(
-              icon: Icon(Icons.account_circle, color: Color(0xff7d5a5a)),
-              title:
-              Text('Tài khoản', style: TextStyle(color: Color(0xff7d5a5a))),
-              activeColor: Color(0xfff1d1d1)
-          ),
+              icon: Icon(Icons.account_circle, color: Colors.brown[800]),
+              title: Text('Tài khoản',
+                  style: TextStyle(color: Colors.brown[800])),
+              activeColor: Color(0xfff1d1d1)),
           BottomNavyBarItem(
-              icon: Icon(Icons.settings, color: Color(0xff7d5a5a)),
+              icon: Icon(Icons.settings, color: Colors.brown[800]),
               title:
-              Text('Cài đặt', style: TextStyle(color: Color(0xff7d5a5a))),
-              activeColor: Color(0xfff1d1d1)
-          ),
+                  Text('Cài đặt', style: TextStyle(color: Colors.brown[800])),
+              activeColor: Color(0xfff1d1d1)),
         ],
       ),
     );
   }
 }
-

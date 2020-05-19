@@ -8,7 +8,6 @@ import 'griddashboad.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MainPage extends StatefulWidget {
-
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -37,7 +36,7 @@ class _MainPageState extends State<MainPage> {
                   user.name,
                   style: GoogleFonts.openSans(
                     textStyle: TextStyle(
-                      color: Color(0xff7d5a5a),
+                      color: Colors.brown[700],
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -52,18 +51,18 @@ class _MainPageState extends State<MainPage> {
                   user.money,
                   style: GoogleFonts.openSans(
                       textStyle: TextStyle(
-                    color: Color(0xff7d5a5a),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
+                    color: Colors.brown[700],
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
                   )),
                 ),
                 Text(
                   'VND',
                   style: GoogleFonts.openSans(
                     textStyle: TextStyle(
-                      color: Color(0xff7d5a5a),
+                      color: Colors.brown[300],
                       fontSize: 14,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
