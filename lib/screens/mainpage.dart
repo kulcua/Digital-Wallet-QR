@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:moneymangement/module/user.dart';
-import 'package:moneymangement/services/database.dart';
 import 'package:moneymangement/utilities/constants.dart';
 import 'package:moneymangement/module/user_model.dart';
 import 'package:provider/provider.dart';

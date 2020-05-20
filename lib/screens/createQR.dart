@@ -35,6 +35,10 @@ class CreateQR extends StatelessWidget {
                   data: userId,
                   version: QrVersions.auto,
                   size: 250.0,
+//                  embeddedImage: AssetImage('images/test.jpg'),
+//                  embeddedImageStyle: QrEmbeddedImageStyle(
+//                    size: Size(80, 80),
+//                  ),
                 ),
               ),
               FlatButton.icon(
