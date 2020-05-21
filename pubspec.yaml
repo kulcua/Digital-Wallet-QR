@@ -20,6 +20,9 @@ dependencies:
   image_gallery_saver: ^1.2.2
   image_picker: ^0.6.6+1
   qr_flutter: ^3.2.0
+  intl: ^0.16.1
+  pin_code_fields: ^3.0.1
+
 
 dev_dependencies:
   flutter_test:
