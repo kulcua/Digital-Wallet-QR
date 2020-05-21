@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/screens/createQR.dart';
-import 'package:moneymangement/screens/scanning_page.dart';
 import 'package:moneymangement/screens/transaction.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
