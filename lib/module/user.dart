@@ -1,5 +1,7 @@
-class User {
-  final String uid;
+import 'package:flutter/foundation.dart';
 
-  User({this.uid});
+class UserData extends ChangeNotifier {
+  String currentUserId;
+
+  UserData({this.currentUserId});
 }

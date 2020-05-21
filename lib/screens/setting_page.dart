@@ -6,17 +6,15 @@ class Setting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-          body: Center(
-            child: RaisedButton(
-              child: Text('Sign out'),
-              onPressed: () async{
-                await _auth.signOut();
-              },
-            ),
-          ),
-        )
+    return Container(
+      child: Center(
+        child: RaisedButton(
+          child: Text('Sign out'),
+          onPressed: () async {
+            await _auth.signOut();
+          },
+        ),
+      ),
     );
   }
 }

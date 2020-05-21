@@ -32,11 +32,11 @@ class _SignInState extends State<SignIn> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Hello Bo!',
+                'Chào Bò tui!',
                 style: TextStyle(
                   fontFamily: 'Source Sans Pro',
                   fontSize: 40.0,
-                  color: Colors.blue,
+                  color: Color(0xff7d5a5a),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -44,7 +44,7 @@ class _SignInState extends State<SignIn> {
                 '0943523565',
                 style: TextStyle(
                   fontFamily: 'Source Sans Pro',
-                  color: Colors.blue[700],
+                  color: Color(0xff7d5a5a),
                   fontSize: 20.0,
                   letterSpacing: 2.5,
                   fontWeight: FontWeight.bold,
@@ -54,13 +54,13 @@ class _SignInState extends State<SignIn> {
                 height: 20.0,
                 width: 150.0,
                 child: Divider(
-                  color: Colors.blue,
+                  color: Color(0xff7d5a5a),
                 ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                 child: TextFormField(
-                  validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                  validator: (val) => val.isEmpty ? 'Nhập email' : null,
                   onChanged: (val) {
                     setState(() => email = val);
                   },
@@ -74,7 +74,7 @@ class _SignInState extends State<SignIn> {
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                 child: TextFormField(
                   validator: (val) => val.length < 6
-                      ? 'Password must be than 6 characters'
+                      ? 'Mật khẩu phải hơn 6 kí tự'
                       : null,
                   onChanged: (val) {
                     setState(() => password = val);
@@ -82,13 +82,13 @@ class _SignInState extends State<SignIn> {
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Password',
+                    labelText: 'Mật khẩu',
                   ),
                 ),
               ),
               RaisedButton(
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 60.0),
-                color: Colors.blue,
+                color: Color(0xff7d5a5a),
                 onPressed: () async {
                   noti.init();
                   if (_formKey.currentState.validate()) {
@@ -96,13 +96,13 @@ class _SignInState extends State<SignIn> {
                         await _auth.signInWithEmailAndPassword(email, password);
                     if (result == null) {
                       setState(() {
-                        error = 'Cound not sign in with those cedentials';
+                        error = 'Vui lòng kiểm tra lại thông tin đăng nhập';
                       });
                     }
                   }
                 },
                 child: Text(
-                  "Sign in",
+                  "Đăng nhập",
                   style: TextStyle(
                       fontSize: 17.0,
                       fontFamily: 'Source Sans Pro',
@@ -112,7 +112,7 @@ class _SignInState extends State<SignIn> {
               FlatButton.icon(
                   onPressed: () {},
                   icon: Icon(Icons.fingerprint),
-                  label: Text('Fingerprint unlock')),
+                  label: Text('Mở khoá bằng vân tay')),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -121,7 +121,7 @@ class _SignInState extends State<SignIn> {
                       /*...*/
                     },
                     child: Text(
-                      "Forget password",
+                      "Quên mật khẩu",
                     ),
                   ),
                   FlatButton(
@@ -129,7 +129,7 @@ class _SignInState extends State<SignIn> {
                       widget.toggleView();
                     },
                     child: Text(
-                      "Sign up",
+                      "Đăng kí",
                     ),
                   )
                 ],
