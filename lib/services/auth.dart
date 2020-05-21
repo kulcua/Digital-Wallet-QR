@@ -1,19 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:moneymangement/authen/signin.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:moneymangement/module/user.dart';
-import 'package:moneymangement/services/database.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  //String verificationId;
+  final _firestore = Firestore.instance;
 
   // create obj base on Firebase User
-  User _userFormFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
+  UserData _userFormFirebaseUser(FirebaseUser user) {
+    return user != null ? UserData(currentUserId: user.uid) : null;
   }
 
   // auth change user stream
-  Stream<User> get user {
+  Stream<UserData> get user {
     return _auth.onAuthStateChanged.map(_userFormFirebaseUser);
   }
 
@@ -42,17 +43,59 @@ class AuthServices {
     }
   }
 
+  // get uid
+  Future<String> getCurrentUID() async {
+    return (await _auth.currentUser()).uid;
+  }
+
+  //get user
+  Future getCurrentUser() async {
+    return await _auth.currentUser();
+  }
+
 //register
-  Future registerWithEmailAndPassword(String email, String password) async {
+//  Future registerWithEmailAndPassword(String email, String password) async {
+//    try {
+//      AuthResult result = await _auth.createUserWithEmailAndPassword(
+//          email: email, password: password);
+//      FirebaseUser user = result.user;
+//
+//      //create user info with uid
+//      return _userFormFirebaseUser(user);
+//    } catch (e) {
+//      print(e.toString());
+//      return null;
+//    }
+//  }
+
+  //register new
+  Future<String> registerWithEmailAndPassword(
+      BuildContext context,
+      String email,
+      String password,
+      String name,
+      String money,
+      String phone) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      FirebaseUser user = result.user;
-      return _userFormFirebaseUser(user);
+      AuthResult authResult = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      FirebaseUser signedInUser = authResult.user;
+      if (signedInUser != null) {
+        _firestore.collection('users').document(signedInUser.uid).setData({
+          'email': email,
+          'name': name,
+          'money': money,
+          'phone': phone,
+        });
+        Provider.of<UserData>(context).currentUserId = signedInUser.uid;
+        Navigator.pop(context);
+      }
     } catch (e) {
-      print(e.toString());
-      return null;
+      return e.code;
     }
+    return '';
   }
 
   //register phone
@@ -81,7 +124,6 @@ class AuthServices {
 //        codeSent: smsSent,
 //        codeAutoRetrievalTimeout: autoTimeout);
 //  }
-
 
 //sign out
   Future signOut() async {

@@ -18,44 +18,14 @@ class _SignUpState extends State<SignUp> {
 
   final AuthServices _auth = AuthServices();
   final _formKey = GlobalKey<FormState>();
-  DatabaseMethods databaseMethods = new DatabaseMethods();
 
-  TextEditingController emailTextEditingController =
-      new TextEditingController();
-  TextEditingController passwordTextEditingController =
-      new TextEditingController();
-  TextEditingController nameTextEditingController = new TextEditingController();
-  TextEditingController phoneTextEditingController =
-      new TextEditingController();
 
   String email = '';
   String password = '';
+  String name = '';
+  String money = '1,000,000';
+  String phone = '';
   String error = '';
-
-  signMeUp() {
-    if (_formKey.currentState.validate()) {
-
-      Map<String, String> userInfoMap = {
-        "email": emailTextEditingController.text,
-        "name": nameTextEditingController.text,
-        "phone": phoneTextEditingController.text,
-        "money": '10000000'
-      };
-      _auth
-          .registerWithEmailAndPassword(emailTextEditingController.text,
-              passwordTextEditingController.text)
-          .then((val) {
-            //print("${val}");
-        databaseMethods.uploadUserInfo(userInfoMap);
-//      Navigator.pushReplacement(
-//            context, MaterialPageRoute(builder: (context) => Home()));
-      });
-    }
-  }
-
-//    setState(() {
-//      isLoading = true;
-//    });
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +37,11 @@ class _SignUpState extends State<SignUp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Register',
+              'Đăng kí',
               style: TextStyle(
                 fontFamily: 'Source Sans Pro',
                 fontSize: 40.0,
-                color: Colors.blue,
+                color: Color(0xff7d5a5a),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -79,14 +49,13 @@ class _SignUpState extends State<SignUp> {
               height: 20.0,
               width: 150.0,
               child: Divider(
-                color: Colors.blue,
+                color: Color(0xff7d5a5a),
               ),
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
               child: TextFormField(
-                controller: emailTextEditingController,
-                validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                validator: (val) => val.isEmpty ? 'Nhập email' : null,
                 onChanged: (val) {
                   setState(() => email = val);
                 },
@@ -99,9 +68,8 @@ class _SignUpState extends State<SignUp> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
               child: TextFormField(
-                controller: passwordTextEditingController,
                 validator: (val) => val.length < 6
-                    ? 'Password must be than 6 characters'
+                    ? 'Mật khẩu phải hơn 6 kí tự'
                     : null,
                 onChanged: (val) {
                   setState(() => password = val);
@@ -109,48 +77,51 @@ class _SignUpState extends State<SignUp> {
                 obscureText: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Password',
+                  labelText: 'Mật khẩu',
                 ),
               ),
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
               child: TextFormField(
-                controller: nameTextEditingController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Full name',
+                  labelText: 'Tên của bạn',
                 ),
+                onChanged: (val) {
+                  setState(() => name = val);
+                },
               ),
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
               child: TextFormField(
-                controller: phoneTextEditingController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Phone number',
+                  labelText: 'Số điện thoại',
                 ),
+                onChanged: (val) {
+                  setState(() => phone = val);
+                },
               ),
             ),
             RaisedButton(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 60.0),
-              color: Colors.blue,
+              color: Color(0xff7d5a5a),
               onPressed: () async {
-                signMeUp();
                 if (_formKey.currentState.validate()) {
                   dynamic result =
-                      await _auth.registerWithEmailAndPassword(email, password);
+                      await _auth.registerWithEmailAndPassword(context, email, password, name, money, phone);
                   if (result == null) {
                     setState(() {
-                      error = 'Please supply a valid email';
+                      error = 'Email không tồn tại';
                     });
                   }
                 }
               },
               child: Text(
-                "Register",
+                "Đăng kí",
                 style: TextStyle(
                     fontSize: 17.0,
                     fontFamily: 'Source Sans Pro',
@@ -158,7 +129,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             FlatButton(
-              child: Text('Sign in'),
+              child: Text('Đăng nhập'),
               onPressed: () {
                 widget.toggleView();
               },
