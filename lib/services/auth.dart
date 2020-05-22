@@ -75,7 +75,8 @@ class AuthServices {
       String password,
       String name,
       String money,
-      String phone) async {
+      String phone,
+      String pin) async {
     try {
       AuthResult authResult = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -88,6 +89,7 @@ class AuthServices {
           'name': name,
           'money': money,
           'phone': phone,
+          'pin': pin,
         });
         Provider.of<UserData>(context).currentUserId = signedInUser.uid;
         Navigator.pop(context);

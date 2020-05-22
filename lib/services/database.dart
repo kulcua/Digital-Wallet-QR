@@ -29,10 +29,11 @@ class DatabaseService {
   }
 
   static void updateUser(User user) {
-    usersRef.document(user.email).updateData({
+    print('user idddd ${user.id}');
+    usersRef.document(user.id).updateData({
       'name': user.name,
-//      'profileImageUrl': user.profileImageUrl,
-//      'bio': user.bio
+      'money': user.money,
+      'pin': user.pin,
     });
   }
 

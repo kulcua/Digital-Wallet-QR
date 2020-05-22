@@ -6,13 +6,15 @@ import 'package:provider/provider.dart';
 import 'griddashboad.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'input_pin.dart';
+
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  @override
+
   buildProfileInfo(User user) {
     return Padding(
         padding: EdgeInsets.only(left: 16, right: 16),
