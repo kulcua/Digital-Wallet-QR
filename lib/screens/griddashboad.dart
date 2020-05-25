@@ -1,11 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moneymangement/module/user_model.dart';
 import 'package:moneymangement/screens/createQR.dart';
 import 'package:moneymangement/screens/transaction.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
-class GridDashboard extends StatelessWidget {
+class GridDashboard extends StatefulWidget {
+
+  final User user;
+   GridDashboard({this.user});
+
+  @override
+  _GridDashboardState createState() => _GridDashboardState();
+}
+
+class _GridDashboardState extends State<GridDashboard> {
   Item item1 = new Item(
     title: 'Mã QR',
     img: 'images/qrcode.png',
@@ -49,7 +59,7 @@ class GridDashboard extends StatelessWidget {
                 } else {
                   print('resulltnenenene$result_qr');
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Transaction(uid_receiver: result_qr,)));
+                      MaterialPageRoute(builder: (context) => Transaction(uid_receiver: result_qr, user: widget.user,)));
                 }
               }
 //              else if (data.title == 'Top Up')

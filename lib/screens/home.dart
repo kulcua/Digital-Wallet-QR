@@ -1,18 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:moneymangement/module/user_model.dart';
-import 'package:moneymangement/screens/input_pin.dart';
 import 'package:moneymangement/screens/user_page.dart';
-import 'package:moneymangement/utilities/constants.dart';
 import 'history_page.dart';
 import 'mainpage.dart';
 import 'setting_page.dart';
 
 class Home extends StatefulWidget {
-//  final String userId;
-//
-//  Home({this.userId});
 
   @override
   _HomeState createState() => _HomeState();

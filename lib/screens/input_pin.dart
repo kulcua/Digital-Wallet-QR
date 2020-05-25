@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:moneymangement/module/user.dart';
 import 'package:moneymangement/module/user_model.dart';
 import 'package:moneymangement/screens/home.dart';
 import 'package:moneymangement/services/database.dart';
-import 'package:moneymangement/utilities/constants.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:provider/provider.dart';
 
 class InputPin extends StatefulWidget {
 
@@ -35,6 +32,8 @@ class _InputPinState extends State<InputPin> {
        //Update user in database
       User user = User(
         id: widget.user.id,
+        name: widget.user.name,
+        money: widget.user.money,
         pin: _pin,
       );
 
@@ -42,13 +41,16 @@ class _InputPinState extends State<InputPin> {
       // Database update
       DatabaseService.updateUser(user);
 
-      //Navigator.pop(context);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => Home()));
+
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Form(
         key: _formKey,
         child: Column(
@@ -87,18 +89,26 @@ class _InputPinState extends State<InputPin> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 30,
+            ),
             RaisedButton(
               onPressed: _submit,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              color: Color(0xfff1d1d1),
+              padding:
+              EdgeInsets.symmetric(vertical: 10.0, horizontal: 80.0),
               child: Text(
-                'Xác nhận',
+                "Xác nhận",
                 style: GoogleFonts.openSans(
                     textStyle: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                )),
+                      color: Colors.brown[800],
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    )),
               ),
-            )
+            ),
           ],
         ),
       ),

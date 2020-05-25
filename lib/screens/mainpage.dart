@@ -98,7 +98,17 @@ class _MainPageState extends State<MainPage> {
           SizedBox(
             height: 40,
           ),
-          GridDashboard(),
+          FutureBuilder(
+              future: usersRef.document(userId).get(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                User user = User.fromDoc(snapshot.data);
+                return  GridDashboard(user: user,);
+              }),
           //test
         ],
       ),
