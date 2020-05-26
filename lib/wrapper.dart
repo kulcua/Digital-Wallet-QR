@@ -10,18 +10,10 @@ import 'module/user_model.dart';
 class Wrapper extends StatelessWidget {
   String get userId => null;
 
-//  checkPin(User user) {
-//    if (user.pin == '0')
-//      return InputPin();
-//    else
-//      return Home();
-//  }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserData>(context);
     print(user);
-
     // return Home or Authentication
     if (user == null)
       return Authentication();
@@ -41,8 +33,6 @@ class Wrapper extends StatelessWidget {
               return InputPin(user: user,);
             else
               return Home();
-//            return Container(
-//              child: checkPin(user),
           });
   }
 }
