@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:moneymangement/authen/authen.dart';
-import 'package:moneymangement/module/user.dart';
+import 'package:moneymangement/models/user.dart';
 import 'package:moneymangement/screens/home.dart';
 import 'package:moneymangement/screens/input_pin.dart';
 import 'package:moneymangement/utilities/constants.dart';
 import 'package:provider/provider.dart';
-import 'module/user_model.dart';
+import 'models/user_model.dart';
 
 class Wrapper extends StatelessWidget {
   String get userId => null;
@@ -13,8 +13,7 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserData>(context);
-    print(user);
-    // return Home or Authentication
+    print('luc dau $user');
     if (user == null)
       return Authentication();
     else
@@ -27,12 +26,18 @@ class Wrapper extends StatelessWidget {
               );
             }
             User user = User.fromDoc(snapshot.data);
-            print('nameee ${user.pin}');
-            print('nameee ${user.name}');
+            print('wrapper ${user.name}');
+            print('wrapper ${user.pin}');
             if (user.pin == '0')
-              return InputPin(user: user,);
-            else
-              return Home(user: user,);
+              return InputPin(
+                user: user,
+              );
+            else {
+              print('wrapper qua home');
+              return Home(
+                user: user,
+              );
+            }
           });
   }
 }

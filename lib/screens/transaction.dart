@@ -1,20 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:moneymangement/module/user_model.dart';
+import 'package:moneymangement/models/transaction_model.dart';
+import 'package:moneymangement/models/user_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/screens/setting_page.dart';
+import 'package:moneymangement/services/database.dart';
 import 'package:moneymangement/utilities/currency.dart';
 import 'package:moneymangement/utilities/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:moneymangement/wrapper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:intl/intl.dart';
 
 class Transaction extends StatefulWidget {
-  final String uid_receiver;
+  final String uidReceiver;
   final User user;
 
-  Transaction({this.uid_receiver, this.user});
+  Transaction({this.uidReceiver, this.user});
 
   @override
   _TransactionState createState() => _TransactionState();
@@ -26,10 +29,11 @@ class _TransactionState extends State<Transaction> {
   String currentText = '';
   String _pin = '';
   bool _isLoading = false;
-  String money = '';
+  int money = 0;
+  User userReceiver;
 
-
-  _infoReceiver(User user) {
+  _infoReceiver() {
+    print('info ${userReceiver.name}');
     return Container(
       child: Card(
         child: Padding(
@@ -49,7 +53,7 @@ class _TransactionState extends State<Transaction> {
                     )),
                   ),
                   Text(
-                    user.name,
+                    userReceiver.name,
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                       color: Colors.brown[800],
@@ -73,7 +77,7 @@ class _TransactionState extends State<Transaction> {
                     )),
                   ),
                   Text(
-                    user.phone,
+                    userReceiver.phone,
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                       color: Colors.brown[800],
@@ -97,9 +101,7 @@ class _TransactionState extends State<Transaction> {
                     )),
                   ),
                   Text(
-                    DateFormat('HH:mm dd-MM-yyyy')
-                        .format(DateTime.now())
-                        .toString(),
+                    DateFormat('HH:mm dd-MM-yyyy').format(DateTime.now()),
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                       color: Colors.brown[800],
@@ -138,7 +140,7 @@ class _TransactionState extends State<Transaction> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => Transaction(
-                              uid_receiver: widget.uid_receiver,
+                              uidReceiver: widget.uidReceiver,
                               user: widget.user,
                             )));
               },
@@ -150,7 +152,7 @@ class _TransactionState extends State<Transaction> {
   }
 
   _verifyPin() {
-    print('vo dc nek');
+    print('verify pin');
     if (_formKey.currentState.validate() && !_isLoading) {
       _formKey.currentState.save();
 
@@ -159,13 +161,54 @@ class _TransactionState extends State<Transaction> {
       });
 
       if (_pin == widget.user.pin) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Setting()));
+        print('vo submit');
+        _submit();
       } else
         _showErrorDialog();
     }
   }
 
+  _submit() async {
+    print('vo submit');
+      // Create transaction
+      TransactionModel trans = TransactionModel(
+        idSender: widget.user.id,
+        idReceiver: userReceiver.id,
+        state: 'henxui',
+        money: money,
+        time: DateFormat('HH:mm dd-MM-yyyy').format(DateTime.now()),
+        typeTransaction: 'quet qr',
+      );
+      DatabaseService.createTransaction(trans);
+
+      //update money for 2 users
+
+      //sender
+      print ('sender money ${widget.user.name}');
+      print ('sender money ${widget.user.money}');
+      User userSender = User(
+        id: widget.user.id,
+        name: widget.user.name,
+        money: 100,
+        pin: widget.user.pin,
+      );
+
+      //receiver
+      print ('receiver money ${userReceiver.name}');
+      print ('receiver money ${userReceiver.money}');
+      userReceiver = User(
+        id: userReceiver.id,
+        name: userReceiver.name,
+        money: 200,
+        pin: userReceiver.pin,
+      );
+
+      // Database update
+      DatabaseService.updateUser(userSender);
+      DatabaseService.updateUser(userReceiver);
+  }
+
+  @override
   Widget build(BuildContext context) {
     void _showVerifyPasswordPanel() {
       showModalBottomSheet(
@@ -243,7 +286,7 @@ class _TransactionState extends State<Transaction> {
           });
     }
 
-    print('id receiver: ${widget.uid_receiver}');
+    //print('id receiver: ${widget.uid_receiver}');
     return Form(
       key: _formKey,
       child: Scaffold(
@@ -273,7 +316,8 @@ class _TransactionState extends State<Transaction> {
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: TextFormField(
                       onChanged: (val) {
-                        setState(() => money = val.replaceAll('.',''));
+                        setState(
+                            () => money = int.parse(val.replaceAll('.', '')));
                         print('money ne $money');
                       },
                       inputFormatters: [
@@ -281,12 +325,10 @@ class _TransactionState extends State<Transaction> {
                         CurrencyFormat()
                       ],
                       validator: (val) {
-                        if (val.isEmpty)
-                            return 'Hãy nhập số tiền';
-                        if (int.parse(money) < 1000)
-                          {
-                            return 'Số tiền phải lớn hơn 1,000';
-                          }
+                        if (val.isEmpty) return 'Hãy nhập số tiền';
+                        if (money < 1000) {
+                          return 'Số tiền phải lớn hơn 1,000';
+                        }
                         return null;
                       },
                       keyboardType: TextInputType.number,
@@ -311,16 +353,16 @@ class _TransactionState extends State<Transaction> {
                     ),
                   ),
                   FutureBuilder(
-                      future: usersRef.document(widget.uid_receiver).get(),
+                      future: usersRef.document(widget.uidReceiver).get(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (!snapshot.hasData) {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
                         }
-                        User user = User.fromDoc(snapshot.data);
+                        userReceiver = User.fromDoc(snapshot.data);
                         return Container(
-                          child: _infoReceiver(user),
+                          child: _infoReceiver(),
                         );
                       }),
                   Padding(

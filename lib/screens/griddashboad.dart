@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:moneymangement/module/user_model.dart';
+import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/screens/createQR.dart';
 import 'package:moneymangement/screens/result_transaction.dart';
 import 'package:moneymangement/screens/transaction.dart';
+import 'package:moneymangement/utilities/constants.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
 class GridDashboard extends StatefulWidget {
-
   final User user;
-   GridDashboard({this.user});
+
+  GridDashboard({this.user});
 
   @override
   _GridDashboardState createState() => _GridDashboardState();
@@ -59,15 +60,32 @@ class _GridDashboardState extends State<GridDashboard> {
                   print('null r');
                 } else {
                   print('resulltnenenene$result_qr');
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Transaction(uid_receiver: result_qr, user: widget.user,)));
+//                  FutureBuilder(
+//                      future: usersRef.document(result_qr).get(),
+//                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+//                        if (!snapshot.hasData) {
+//                          return Center(
+//                            child: CircularProgressIndicator(),
+//                          );
+//                        }
+//                        User userReceiver = User.fromDoc(snapshot.data);
+//                        print('vo future');
+//                        return Transaction(
+//                          user: widget.user, userReceiver: userReceiver,);
+//                      });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Transaction(
+                            uidReceiver: result_qr,
+                                user: widget.user,
+                              )));
                 }
-              }
-              else if (data.title == 'Nạp tiền')
-    {
-      print('do k');
-      Navigator.push(context,MaterialPageRoute(builder: (context)=> ResultTransaction()));
-    }
+              } else if (data.title == 'Nạp tiền')
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ResultTransaction()));
 
 //              else if (data.title == 'Wallet')
 //                Navigator.push(context,MaterialPageRoute(builder: (context)=> Scanning()));

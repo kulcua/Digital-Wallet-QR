@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_storage/firebase_storage.dart';
 
-//final _firestore = Firestore.instance;
+final _firestore = Firestore.instance;
 //final storageRef = FirebaseStorage.instance.ref();
-final usersRef = Firestore.instance.collection('users');
+final usersRef = _firestore.collection('users');
+final transactionsRef = _firestore.collection('transactions');

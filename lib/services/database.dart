@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:moneymangement/module/user_model.dart';
+import 'package:moneymangement/models/transaction_model.dart';
+import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/utilities/constants.dart';
 
 class DatabaseService {
@@ -18,6 +19,18 @@ class DatabaseService {
       'name': user.name,
       'money': user.money,
       'pin': user.pin,
+    });
+  }
+
+  static void createTransaction(TransactionModel trans) {
+    // Add user to current user's following collection
+    transactionsRef.document(trans.idSender).setData({
+      'idSender': trans.idSender,
+      'idReceiver': trans.idReceiver,
+      'state': trans.state,
+      'money': trans.money,
+      'time': trans.time,
+      'typeTransaction': trans.typeTransaction,
     });
   }
 }

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:moneymangement/module/user.dart';
+import 'package:moneymangement/models/user.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -74,7 +74,7 @@ class AuthServices {
       String email,
       String password,
       String name,
-      String money,
+      int money,
       String phone,
       String pin) async {
     try {
@@ -92,7 +92,7 @@ class AuthServices {
           'pin': pin,
         });
         Provider.of<UserData>(context).currentUserId = signedInUser.uid;
-        Navigator.pop(context);
+        //Navigator.pop(context);
       }
     } catch (e) {
       return e.code;
@@ -130,6 +130,7 @@ class AuthServices {
 //sign out
   Future signOut() async {
     try {
+      print('sign out roi');
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:moneymangement/module/user_model.dart';
+import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/screens/home.dart';
 import 'package:moneymangement/services/database.dart';
+import 'package:moneymangement/wrapper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class InputPin extends StatefulWidget {
@@ -41,9 +42,9 @@ class _InputPinState extends State<InputPin> {
       // Database update
       DatabaseService.updateUser(user);
 
+      print('pin qua home');
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => Home()));
-
+          MaterialPageRoute(builder: (context) => Wrapper()));
     }
   }
 

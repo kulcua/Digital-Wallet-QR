@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:moneymangement/screens/setting_page.dart';
 
 class User {
   final String id;
   final String name;
-  final String money;
+  final int money;
   final String phone;
   final String email;
   final String pin;

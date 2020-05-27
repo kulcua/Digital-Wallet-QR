@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:moneymangement/module/user.dart';
-import 'package:moneymangement/module/user_model.dart';
+import 'package:moneymangement/models/user.dart';
+import 'package:moneymangement/models/user_model.dart';
 import 'package:provider/provider.dart';
 import 'griddashboad.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +18,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
 
   buildProfileInfo(User user) {
+    print('user info ${user.name}');
     return Padding(
         padding: EdgeInsets.only(left: 16, right: 16),
         child: Row(
@@ -51,7 +52,7 @@ class _MainPageState extends State<MainPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text(
-                  NumberFormat("#,###","vi").format(int.parse(user.money)),
+                  NumberFormat("#,###","vi").format(user.money),
                   style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                     color: Colors.brown[700],

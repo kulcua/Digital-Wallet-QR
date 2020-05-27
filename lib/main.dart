@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneymangement/module/user.dart';
+import 'package:moneymangement/models/user.dart';
 import 'package:moneymangement/services/auth.dart';
 import 'package:moneymangement/wrapper.dart';
 import 'package:provider/provider.dart';

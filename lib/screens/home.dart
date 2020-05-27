@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:moneymangement/module/user_model.dart';
+import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/screens/user_page.dart';
 import 'history_page.dart';
 import 'mainpage.dart';
@@ -34,6 +34,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    print('home ${widget.user.name}');
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
