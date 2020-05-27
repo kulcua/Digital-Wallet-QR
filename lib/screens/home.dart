@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:moneymangement/module/user_model.dart';
 import 'package:moneymangement/screens/user_page.dart';
 import 'history_page.dart';
 import 'mainpage.dart';
 import 'setting_page.dart';
 
 class Home extends StatefulWidget {
+
+  final User user;
+  Home({this.user});
 
   @override
   _HomeState createState() => _HomeState();
@@ -39,7 +43,7 @@ class _HomeState extends State<Home> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            MainPage(),
+            MainPage(user: widget.user,),
             History(),
             UserPage(),
             Setting(),

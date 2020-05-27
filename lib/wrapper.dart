@@ -32,7 +32,7 @@ class Wrapper extends StatelessWidget {
             if (user.pin == '0')
               return InputPin(user: user,);
             else
-              return Home();
+              return Home(user: user,);
           });
   }
 }

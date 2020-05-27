@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:moneymangement/module/user.dart';
-import 'package:moneymangement/utilities/constants.dart';
 import 'package:moneymangement/module/user_model.dart';
 import 'package:provider/provider.dart';
 import 'griddashboad.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'input_pin.dart';
-
 class MainPage extends StatefulWidget {
+  final User user;
+
+  MainPage({this.user});
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -49,7 +51,7 @@ class _MainPageState extends State<MainPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text(
-                  user.money,
+                  NumberFormat("#,###","vi").format(int.parse(user.money)),
                   style: GoogleFonts.openSans(
                       textStyle: TextStyle(
                     color: Colors.brown[700],
@@ -82,34 +84,15 @@ class _MainPageState extends State<MainPage> {
           SizedBox(
             height: 50,
           ),
-          FutureBuilder(
-              future: usersRef.document(userId).get(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                User user = User.fromDoc(snapshot.data);
-                return Container(
-                  child: buildProfileInfo(user),
-                );
-              }),
+          Container(
+            child: buildProfileInfo(widget.user),
+          ),
           SizedBox(
             height: 40,
           ),
-          FutureBuilder(
-              future: usersRef.document(userId).get(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                User user = User.fromDoc(snapshot.data);
-                return  GridDashboard(user: user,);
-              }),
-          //test
+          GridDashboard(
+            user: widget.user,
+          ),
         ],
       ),
     );

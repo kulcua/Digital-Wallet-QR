@@ -20,7 +20,7 @@ class _SignUpState extends State<SignUp> {
   String email = '';
   String password = '';
   String name = '';
-  String money = '1,000,000';
+  String money = '10000000';
   String phone = '';
   String pin = '0';
   String error = '';
