@@ -24,7 +24,7 @@ class DatabaseService {
 
   static void createTransaction(TransactionModel trans) {
     // Add user to current user's following collection
-    transactionsRef.document(trans.idSender).setData({
+    transactionsRef.document(trans.idSender).collection('userTrans').add({
       'idSender': trans.idSender,
       'idReceiver': trans.idReceiver,
       'state': trans.state,

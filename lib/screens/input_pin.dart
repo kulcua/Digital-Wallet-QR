@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/models/user_model.dart';
-import 'package:moneymangement/screens/home.dart';
 import 'package:moneymangement/services/database.dart';
 import 'package:moneymangement/wrapper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
