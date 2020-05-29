@@ -58,26 +58,13 @@ class _GridDashboardState extends State<GridDashboard> {
                 String result_qr = await scanner.scan();
                 if (result_qr == null) {
                   print('null r');
-                } else {
+                } else if (result_qr != widget.user.id){
                   print('resulltnenenene$result_qr');
-//                  FutureBuilder(
-//                      future: usersRef.document(result_qr).get(),
-//                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-//                        if (!snapshot.hasData) {
-//                          return Center(
-//                            child: CircularProgressIndicator(),
-//                          );
-//                        }
-//                        User userReceiver = User.fromDoc(snapshot.data);
-//                        print('vo future');
-//                        return Transaction(
-//                          user: widget.user, userReceiver: userReceiver,);
-//                      });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => Transaction(
-                            uidReceiver: result_qr,
+                                uidReceiver: result_qr,
                                 user: widget.user,
                               )));
                 }

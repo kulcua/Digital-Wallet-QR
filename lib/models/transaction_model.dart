@@ -6,7 +6,7 @@ class TransactionModel {
   final String idReceiver;
   final String state;
   final int money;
-  final String time;
+  final Timestamp time;
   final String typeTransaction;
 
   TransactionModel(
@@ -30,3 +30,12 @@ class TransactionModel {
     );
   }
 }
+
+
+
+
+
+//
+
+
+

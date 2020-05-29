@@ -20,7 +20,7 @@ class CreateQR extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Đưa mã này cho thu ngân để thanh toán',
+                'Đưa mã này cho khách hàng thanh toán',
                 style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                   color: Color(0xff7d5a5a),

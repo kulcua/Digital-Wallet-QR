@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
 import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/utilities/constants.dart';
@@ -33,4 +34,29 @@ class DatabaseService {
       'typeTransaction': trans.typeTransaction,
     });
   }
+
+  //get user transaction
+  static Future<List<TransactionModel>> getUserTrans(String userId) async {
+    QuerySnapshot userTransSnapshot = await transactionsRef
+        .document(userId)
+        .collection('userTrans').getDocuments();
+//        .orderBy('time', descending: true)
+
+    List<TransactionModel> trans =
+    userTransSnapshot.documents.map((doc) => TransactionModel.fromDoc(doc)).toList();
+    return trans;
+  }
+
+  static Stream<TransactionModel> getTranStream(String tranId, User user) {
+    return transactionsRef
+        .document(user.id)
+        .collection('userTrans')
+        .document(tranId)
+        .snapshots()
+        .map((snapshot) => TransactionModel.fromDoc(snapshot));
+  }
 }
+
+
+
+

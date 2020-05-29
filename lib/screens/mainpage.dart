@@ -78,7 +78,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    String userId = Provider.of<UserData>(context).currentUserId;
     return SafeArea(
       child: Column(
         children: <Widget>[

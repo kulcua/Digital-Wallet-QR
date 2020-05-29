@@ -1,17 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:moneymangement/screens/setting_page.dart';
+import 'package:moneymangement/screens/result_transaction.dart';
 import 'package:moneymangement/services/database.dart';
 import 'package:moneymangement/utilities/currency.dart';
 import 'package:moneymangement/utilities/constants.dart';
 import 'package:intl/intl.dart';
-import 'package:moneymangement/wrapper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:intl/intl.dart';
 
 class Transaction extends StatefulWidget {
   final String uidReceiver;
@@ -31,6 +30,7 @@ class _TransactionState extends State<Transaction> {
   bool _isLoading = false;
   int money = 0;
   User userReceiver;
+//  String transId;
 
   _infoReceiver() {
     print('info ${userReceiver.name}');
@@ -163,6 +163,20 @@ class _TransactionState extends State<Transaction> {
       if (_pin == widget.user.pin) {
         print('vo submit');
         _submit();
+        print(money);
+        print( widget.user.money);
+        print(userReceiver.name);
+//        print(transId);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ResultTransaction(
+                      moneyTrans: money,
+                      moneyUser: widget.user.money,
+                      nameReceiver: userReceiver.name,
+                      idTrans: '3458364913854',
+                    )));
+        print('da qua result');
       } else
         _showErrorDialog();
     }
@@ -170,42 +184,45 @@ class _TransactionState extends State<Transaction> {
 
   _submit() async {
     print('vo submit');
-      // Create transaction
-      TransactionModel trans = TransactionModel(
-        idSender: widget.user.id,
-        idReceiver: userReceiver.id,
-        state: 'henxui',
-        money: money,
-        time: DateFormat('HH:mm dd-MM-yyyy').format(DateTime.now()),
-        typeTransaction: 'quet qr',
-      );
-      DatabaseService.createTransaction(trans);
+    // Create transaction
+    TransactionModel trans = TransactionModel(
+      idSender: widget.user.id,
+      idReceiver: userReceiver.id,
+      state: 'success',
+      money: money,
+      time: Timestamp.fromDate(DateTime.now()),
+      typeTransaction: 'Scan QR',
+    );
+    DatabaseService.createTransaction(trans);
 
-      //update money for 2 users
+//    transId = trans.id;
+//    print('tran ne ${transId}');
 
-      //sender
-      print ('sender money ${widget.user.name}');
-      print ('sender money ${widget.user.money}');
-      User userSender = User(
-        id: widget.user.id,
-        name: widget.user.name,
-        money: 100,
-        pin: widget.user.pin,
-      );
+    //update money for 2 users
 
-      //receiver
-      print ('receiver money ${userReceiver.name}');
-      print ('receiver money ${userReceiver.money}');
-      userReceiver = User(
-        id: userReceiver.id,
-        name: userReceiver.name,
-        money: 200,
-        pin: userReceiver.pin,
-      );
+    //sender
+    print('sender money ${widget.user.name}');
+    print('sender money ${widget.user.money}');
+    User userSender = User(
+      id: widget.user.id,
+      name: widget.user.name,
+      money: widget.user.money - money,
+      pin: widget.user.pin,
+    );
 
-      // Database update
-      DatabaseService.updateUser(userSender);
-      DatabaseService.updateUser(userReceiver);
+    //receiver
+    print('receiver money ${userReceiver.name}');
+    print('receiver money ${userReceiver.money}');
+    userReceiver = User(
+      id: userReceiver.id,
+      name: userReceiver.name,
+      money: userReceiver.money + money,
+      pin: userReceiver.pin,
+    );
+
+    // Database update
+    DatabaseService.updateUser(userSender);
+    DatabaseService.updateUser(userReceiver);
   }
 
   @override
@@ -328,6 +345,9 @@ class _TransactionState extends State<Transaction> {
                         if (val.isEmpty) return 'Hãy nhập số tiền';
                         if (money < 1000) {
                           return 'Số tiền phải lớn hơn 1,000';
+                        }
+                        if (money > widget.user.money) {
+                          return 'Số dư trong ví không đủ';
                         }
                         return null;
                       },

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/screens/user_page.dart';
 import 'history_page.dart';
@@ -45,7 +46,7 @@ class _HomeState extends State<Home> {
           },
           children: <Widget>[
             MainPage(user: widget.user,),
-            History(),
+            History(uid: widget.user.id,user: widget.user,),
             UserPage(),
             Setting(),
           ],
