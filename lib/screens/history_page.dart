@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
@@ -60,8 +61,13 @@ class _HistoryState extends State<History> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Lịch sử giao dịch',
-              style: TextStyle(color: Colors.brown[800], fontSize: 18)),
-          backgroundColor: Color(0xfff1d1d1),
+              style: GoogleFonts.muli(
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  )),),
+          backgroundColor:Color(0xff5e63b6),
         ),
         body: RefreshIndicator(
           onRefresh: () async {

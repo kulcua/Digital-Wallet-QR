@@ -60,13 +60,13 @@ class _TranTileState extends State<TranTile> {
                   padding: const EdgeInsets.all(6.0),
                   child: ListTile(
                     leading: CircleAvatar(
-                      radius: 20,
+                      radius: 25,
                       backgroundColor: Colors.white,
-                      child: Icon(Icons.check, color: Colors.green,),
+                      backgroundImage: AssetImage('images/check.png'),
                     ),
                     title: Text(
                       checkState(_tran.state),
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.muli(
                         textStyle: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -87,7 +87,7 @@ class _TranTileState extends State<TranTile> {
                               userReceiver = snapshot.data;
                               return Text(
                                 'Bạn đã chuyển ${NumberFormat("#,###","vi").format(_tran.money)}đ cho ${userReceiver.name}',
-                                style: GoogleFonts.openSans(
+                                style: GoogleFonts.muli(
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -101,7 +101,7 @@ class _TranTileState extends State<TranTile> {
                               .add_jm()
                               .format(_tran.time.toDate(),
                           ),
-                          style: GoogleFonts.openSans(
+                          style: GoogleFonts.muli(
                               textStyle: TextStyle(
                                 color: Colors.black,
                                 fontSize: 14,

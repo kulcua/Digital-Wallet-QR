@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/screens/user_page.dart';
@@ -9,8 +10,8 @@ import 'mainpage.dart';
 import 'setting_page.dart';
 
 class Home extends StatefulWidget {
-
   final User user;
+
   Home({this.user});
 
   @override
@@ -45,8 +46,13 @@ class _HomeState extends State<Home> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            MainPage(user: widget.user,),
-            History(uid: widget.user.id,user: widget.user,),
+            MainPage(
+              user: widget.user,
+            ),
+            History(
+              uid: widget.user.id,
+              user: widget.user,
+            ),
             UserPage(),
             Setting(),
           ],
@@ -59,28 +65,56 @@ class _HomeState extends State<Home> {
           _pageController.jumpToPage(index);
         },
         itemCornerRadius: 45,
-        backgroundColor: Color(0xfffaf2f2),
+        backgroundColor: Colors.white,
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-              icon: Icon(Icons.home, color: Colors.brown[800]),
-              title: Text('Trang chủ',
-                  style: TextStyle(color: Colors.brown[800])),
-              activeColor: Color(0xfff1d1d1)),
+              icon: Icon(Icons.home, color: Colors.black),
+              title: Text(
+                'Trang chủ',
+                style: GoogleFonts.muli(
+                    textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                )),
+              ),
+              activeColor: Colors.white),
           BottomNavyBarItem(
-              icon: Icon(Icons.access_time, color: Colors.brown[800]),
-              title: Text('Giao dịch',
-                  style: TextStyle(color: Colors.brown[800])),
-              activeColor: Color(0xfff1d1d1)),
+              icon: Icon(Icons.access_time, color: Colors.black),
+              title: Text(
+                'Giao dịch',
+                style: GoogleFonts.muli(
+                    textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                )),
+              ),
+              activeColor: Colors.white),
           BottomNavyBarItem(
-              icon: Icon(Icons.account_circle, color: Colors.brown[800]),
-              title: Text('Tài khoản',
-                  style: TextStyle(color: Colors.brown[800])),
-              activeColor: Color(0xfff1d1d1)),
+              icon: Icon(Icons.account_circle, color: Colors.black),
+              title: Text(
+                'Tài khoản',
+                style: GoogleFonts.muli(
+                    textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                )),
+              ),
+              activeColor: Colors.white),
           BottomNavyBarItem(
-              icon: Icon(Icons.settings, color: Colors.brown[800]),
-              title:
-                  Text('Cài đặt', style: TextStyle(color: Colors.brown[800])),
-              activeColor: Color(0xfff1d1d1)),
+              icon: Icon(Icons.settings, color: Colors.black),
+              title: Text(
+                'Cài đặt',
+                style: GoogleFonts.muli(
+                    textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                )),
+              ),
+              activeColor: Colors.white),
         ],
       ),
     );

@@ -12,50 +12,58 @@ class CreateQR extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Mã QR',
-              style: TextStyle(color: Color(0xff7d5a5a), fontSize: 18)),
-          backgroundColor: Color(0xfff1d1d1),
+            style: GoogleFonts.muli(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                )),),
+          backgroundColor:Color(0xff5e63b6),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Đưa mã này cho khách hàng thanh toán',
-                style: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                  color: Color(0xff7d5a5a),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                )),
-              ),
-              SizedBox(height: 20.0),
-              Container(
-                color: Colors.white,
-                child: QrImage(
-                  data: userId,
-                  version: QrVersions.auto,
-                  size: 250.0,
-//                  embeddedImage: AssetImage('images/test.jpg'),
-//                  embeddedImageStyle: QrEmbeddedImageStyle(
-//                    size: Size(80, 80),
-//                  ),
-                ),
-              ),
-              FlatButton.icon(
-                onPressed: null,
-                icon: Icon(Icons.share),
-                label: Text(
-                  'Chia sẻ mã QR',
-                  style: GoogleFonts.openSans(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Đưa mã này cho khách hàng thanh toán',
+                  style: GoogleFonts.muli(
                       textStyle: TextStyle(
-                    color: Color(0xff7d5a5a),
+                    color: Colors.grey,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                   )),
                 ),
-              ),
-            ],
+                SizedBox(height: 20.0),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xff5e63b6),width: 1.5),
+                    borderRadius: BorderRadius.circular(5.0),),
+                  child: QrImage(
+                    data: userId,
+                    version: QrVersions.auto,
+                    size: 250.0,
+//                  embeddedImage: AssetImage('images/test.jpg'),
+//                  embeddedImageStyle: QrEmbeddedImageStyle(
+//                    size: Size(80, 80),
+//                  ),
+                  ),
+                ),
+                FlatButton.icon(
+                  onPressed: null,
+                  icon: Icon(Icons.share, color: Colors.grey,),
+                  label: Text(
+                    'Chia sẻ mã QR',
+                    style: GoogleFonts.muli(
+                        textStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    )),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ));
+        );
   }
 }

@@ -79,23 +79,24 @@ class _GridDashboardState extends State<GridDashboard> {
             },
             child: Container(
                 decoration: BoxDecoration(
-                    color: Color(0xfff1d1d1),
-                    borderRadius: BorderRadius.circular(10.0)),
+                  border: Border.all(color: Color(0xff5e63b6),width: 2.0),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset(
                       data.img,
-                      width: 42,
+                      width: 70,
                     ),
                     SizedBox(
                       height: 14,
                     ),
                     Text(
                       data.title,
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.muli(
                           textStyle: TextStyle(
-                        color: Colors.brown[800],
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       )),
