@@ -11,11 +11,9 @@ import 'package:moneymangement/utilities/tran_tile.dart';
 import 'package:provider/provider.dart';
 
 class History extends StatefulWidget {
-  final String uid;
-
   final User user;
 
-  History({this.uid, this.user});
+  History({this.user});
 
   @override
   _HistoryState createState() => _HistoryState();
@@ -30,10 +28,10 @@ class _HistoryState extends State<History> {
   }
 
   _setupTrans() async {
-    print('do set up  ${widget.uid}');
+    print('do set up  ${widget.user.id}');
 
     List<TransactionModel> trans =
-        await DatabaseService.getUserTrans(widget.uid);
+        await DatabaseService.getUserTrans(widget.user.id);
     setState(() {
       _trans = trans;
       _trans.forEach((tran) {

@@ -50,10 +50,9 @@ class _HomeState extends State<Home> {
               user: widget.user,
             ),
             History(
-              uid: widget.user.id,
               user: widget.user,
             ),
-            UserPage(),
+            UserPage(user: widget.user,),
             Setting(),
           ],
         ),

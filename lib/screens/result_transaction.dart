@@ -18,7 +18,10 @@ class ResultTransaction extends StatefulWidget {
   _ResultTransactionState createState() => _ResultTransactionState();
 }
 
+
 class _ResultTransactionState extends State<ResultTransaction> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

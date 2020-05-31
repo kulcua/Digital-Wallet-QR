@@ -23,9 +23,21 @@ class DatabaseService {
     });
   }
 
-  static void createTransaction(TransactionModel trans) {
+  static void createTransactionSender(TransactionModel trans) {
     // Add user to current user's following collection
     transactionsRef.document(trans.idSender).collection('userTrans').add({
+      'idSender': trans.idSender,
+      'idReceiver': trans.idReceiver,
+      'state': trans.state,
+      'money': trans.money,
+      'time': trans.time,
+      'typeTransaction': trans.typeTransaction,
+    });
+  }
+
+  static void createTransactionReceiver(TransactionModel trans) {
+    // Add user to current user's following collection
+    transactionsRef.document(trans.idReceiver).collection('userTrans').add({
       'idSender': trans.idSender,
       'idReceiver': trans.idReceiver,
       'state': trans.state,
@@ -39,8 +51,8 @@ class DatabaseService {
   static Future<List<TransactionModel>> getUserTrans(String userId) async {
     QuerySnapshot userTransSnapshot = await transactionsRef
         .document(userId)
-        .collection('userTrans').getDocuments();
-//        .orderBy('time', descending: true)
+        .collection('userTrans')
+        .orderBy('time', descending: true).getDocuments();
 
     List<TransactionModel> trans =
     userTransSnapshot.documents.map((doc) => TransactionModel.fromDoc(doc)).toList();

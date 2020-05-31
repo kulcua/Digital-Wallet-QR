@@ -34,13 +34,24 @@ class _GridDashboardState extends State<GridDashboard> {
   );
 
   Item item4 = new Item(
+    title: 'Rút tiền',
+    img: 'images/losemoney.png',
+  );
+
+  Item item5 = new Item(
+    title: 'Chuyển tiền',
+    img: 'images/exchangemoney.png',
+  );
+
+  Item item6 = new Item(
     title: 'Thẻ',
     img: 'images/wallet.png',
   );
 
+
   @override
   Widget build(BuildContext context) {
-    List<Item> myItem = [item1, item2, item3, item4];
+    List<Item> myItem = [item1, item2, item3, item4,item5,item6];
     return Flexible(
       child: GridView.count(
         childAspectRatio: 1.0,

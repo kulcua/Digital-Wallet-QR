@@ -193,7 +193,9 @@ class _TransactionState extends State<Transaction> {
       time: Timestamp.fromDate(DateTime.now()),
       typeTransaction: 'Scan QR',
     );
-    DatabaseService.createTransaction(trans);
+
+    DatabaseService.createTransactionSender(trans);
+    DatabaseService.createTransactionReceiver(trans);
 
 //    transId = trans.id;
 //    print('tran ne ${transId}');
