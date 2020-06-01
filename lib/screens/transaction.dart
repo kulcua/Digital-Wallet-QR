@@ -351,7 +351,7 @@ class _TransactionState extends State<Transaction> {
                       validator: (val) {
                         if (val.isEmpty) return 'Hãy nhập số tiền';
                         if (money < 1000) {
-                          return 'Số tiền phải lớn hơn 1,000';
+                          return 'Số tiền phải lớn hơn 1.000';
                         }
                         if (money > widget.user.money) {
                           return 'Số dư trong ví không đủ';

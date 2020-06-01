@@ -4,6 +4,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
+import 'package:moneymangement/screens/transfer.dart';
 import 'package:moneymangement/screens/user_page.dart';
 import 'history_page.dart';
 import 'mainpage.dart';

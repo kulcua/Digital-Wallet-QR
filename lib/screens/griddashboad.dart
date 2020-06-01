@@ -5,6 +5,7 @@ import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/screens/createQR.dart';
 import 'package:moneymangement/screens/result_transaction.dart';
 import 'package:moneymangement/screens/transaction.dart';
+import 'package:moneymangement/screens/transfer.dart';
 import 'package:moneymangement/utilities/constants.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
@@ -84,9 +85,8 @@ class _GridDashboardState extends State<GridDashboard> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => ResultTransaction()));
-
-//              else if (data.title == 'Wallet')
-//                Navigator.push(context,MaterialPageRoute(builder: (context)=> Scanning()));
+              else if (data.title == 'Chuyển tiền')
+                Navigator.push(context,MaterialPageRoute(builder: (context)=> Transfer(user: widget.user,)));
             },
             child: Container(
                 decoration: BoxDecoration(

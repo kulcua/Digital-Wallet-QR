@@ -67,6 +67,12 @@ class DatabaseService {
         .snapshots()
         .map((snapshot) => TransactionModel.fromDoc(snapshot));
   }
+
+  static Future<QuerySnapshot> searchUser(String phone) {
+    Future<QuerySnapshot> user =
+    usersRef.where('phone', isEqualTo: phone).getDocuments();
+    return user;
+  }
 }
 
 
