@@ -77,8 +77,6 @@ class _TransferState extends State<Transfer> {
          _submit();
         print(money);
         print(widget.user.money);
-        // print(userReceiver.name);
-//        print(transId);
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -107,7 +105,6 @@ class _TransferState extends State<Transfer> {
       typeTransaction: 'Chuyển tiền',
     );
 
-    DatabaseService.createTransactionSender(trans);
     DatabaseService.createTransactionReceiver(trans);
 
 

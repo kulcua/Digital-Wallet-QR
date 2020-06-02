@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:moneymangement/models/card_model.dart';
 import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/utilities/constants.dart';
@@ -72,6 +73,35 @@ class DatabaseService {
     Future<QuerySnapshot> user =
     usersRef.where('phone', isEqualTo: phone).getDocuments();
     return user;
+  }
+
+  static void createCard(CardModel card, String userId) {
+    // Add user to current user's following collection
+    cardsRef.document(userId).collection('userCards').add({
+      'cardNumber': card.cardNumber,
+      'expiredDate': card.expiredDate,
+      'cvvCode': card.cvvCode,
+      'cardHolder': card.cardHolder,
+    });
+  }
+
+  static Future<List<CardModel>> getUserCards(String userId) async {
+    QuerySnapshot userCardsSnapshot = await cardsRef
+        .document(userId)
+        .collection('userCards').getDocuments();
+
+    List<CardModel> cards =
+    userCardsSnapshot.documents.map((doc) => CardModel.fromDoc(doc)).toList();
+    return cards;
+  }
+
+  static Stream<CardModel> getCardStream(String cardId, User user) {
+    return cardsRef
+        .document(user.id)
+        .collection('userCards')
+        .document(cardId)
+        .snapshots()
+        .map((snapshot) => CardModel.fromDoc(snapshot));
   }
 }
 

@@ -53,7 +53,7 @@ class _TranTileState extends State<TranTile> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<TransactionModel>(
+    return  StreamBuilder<TransactionModel>(
         stream: tranAsyncer,
         builder: (context, snapshot) {
           print('snapshot tile ${snapshot.hasData}');
@@ -66,11 +66,11 @@ class _TranTileState extends State<TranTile> {
                 context,
                 MaterialPageRoute(
                     builder: (_) => ResultTransaction(
-                          moneyTrans: _tran.money,
-                          moneyUser: widget.user.money,
-                          nameReceiver: userReceiver.name,
-                          idTrans: '3458364913854',
-                        )),
+                      moneyTrans: _tran.money,
+                      moneyUser: widget.user.money,
+                      nameReceiver: userReceiver.name,
+                      idTrans: '3458364913854',
+                    )),
               ),
               child: Container(
                 child: Padding(
@@ -106,7 +106,7 @@ class _TranTileState extends State<TranTile> {
                       children: <Widget>[
                         FutureBuilder(
                             future:
-                                DatabaseService.getUserWithId(_tran.idSender),
+                            DatabaseService.getUserWithId(_tran.idSender),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (!snapshot.hasData) {
@@ -117,23 +117,23 @@ class _TranTileState extends State<TranTile> {
                                 checkStateText(widget.user.id, _tran.idReceiver),
                                 style: GoogleFonts.muli(
                                     textStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                )),
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    )),
                               );
                             }),
                         SizedBox(height: 5.0),
                         Text(
                           DateFormat('dd-MM-yyyy').add_jm().format(
-                                _tran.time.toDate(),
-                              ),
+                            _tran.time.toDate(),
+                          ),
                           style: GoogleFonts.muli(
                               textStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w300,
-                          )),
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w300,
+                              )),
                           textAlign: TextAlign.right,
                         ),
                       ],

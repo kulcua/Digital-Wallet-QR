@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/models/user_model.dart';
+import 'package:moneymangement/screens/cardmanagement.dart';
 import 'package:moneymangement/screens/createQR.dart';
 import 'package:moneymangement/screens/result_transaction.dart';
 import 'package:moneymangement/screens/transaction.dart';
@@ -87,6 +88,8 @@ class _GridDashboardState extends State<GridDashboard> {
                         builder: (context) => ResultTransaction()));
               else if (data.title == 'Chuyển tiền')
                 Navigator.push(context,MaterialPageRoute(builder: (context)=> Transfer(user: widget.user,)));
+              else if (data.title == 'Thẻ')
+                Navigator.push(context,MaterialPageRoute(builder: (context)=> CardManagement(user: widget.user,)));
             },
             child: Container(
                 decoration: BoxDecoration(
