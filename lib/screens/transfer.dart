@@ -26,42 +26,11 @@ class _TransferState extends State<Transfer> {
   int money;
   final _formKey = GlobalKey<FormState>();
   User userReceiver;
+  final _pinHolder = TextEditingController();
+  bool _checkPin = false;
 
   TextEditingController _searchController = TextEditingController();
   Future<QuerySnapshot> _user;
-
-  Future<void> _showErrorDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Giao dịch thất bại'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Bạn nhập sai mã PIN'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Thử lại'),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            Transfer(
-                              user: widget.user,
-                            )));
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   _verifyPin() {
     print('verify pin');
@@ -77,20 +46,30 @@ class _TransferState extends State<Transfer> {
          _submit();
         print(money);
         print(widget.user.money);
-        Navigator.push(
+
+        Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    ResultTransaction(
-                      moneyTrans: money,
-                      moneyUser: widget.user.money,
-                      nameReceiver: userReceiver.name,
-                      idTrans: '3458364913854',
-                    )));
+                builder: (context) => ResultTransaction( moneyTrans: money,
+                  moneyUser: widget.user.money,
+                  nameReceiver: userReceiver.name,
+                  idTrans: '3458364913854',)
+            ),
+            ModalRoute.withName('/wrapper'));
+
         print('da qua result');
       } else
-        _showErrorDialog();
+        _checkPin = true;
     }
+  }
+
+  String _resultPin() {
+    if (_checkPin == true)
+    {
+      _pinHolder.clear();
+      return 'Bạn nhập sai mã PIN';
+    }
+    return '';
   }
 
   _submit() async {
@@ -133,8 +112,15 @@ class _TransferState extends State<Transfer> {
     // Database update
     DatabaseService.updateUser(userSender);
     DatabaseService.updateUser(userReceiver);
+
+    Navigator.pop(context);
   }
 
+  @override
+  void dispose() {
+    _pinHolder.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +148,7 @@ class _TransferState extends State<Transfer> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40.0),
                   child: PinCodeTextField(
+                    controller: _pinHolder,
                     onChanged: (input) {
                       _pin = input;
                       print(_pin);
@@ -181,6 +168,11 @@ class _TransferState extends State<Transfer> {
                       fieldWidth: 40,
                     ),
                   ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  _resultPin(),
+                  style: TextStyle(color: Colors.red),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),

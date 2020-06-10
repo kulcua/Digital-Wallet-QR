@@ -86,11 +86,6 @@ class _AddCardState extends State<AddCard> {
                     borderRadius: BorderRadius.circular(10.0)),
                 color: Color(0xff5e63b6),
                 onPressed: _submit,
-//                    () async {
-//
-////                  if (_formKey.currentState.validate())
-////                    _showVerifyPasswordPanel();
-//                },
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 80.0),
                 child: Text(
                   "Xác nhận",
@@ -98,7 +93,7 @@ class _AddCardState extends State<AddCard> {
                       textStyle: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                   )),
                 ),
               ),

@@ -103,6 +103,14 @@ class DatabaseService {
         .snapshots()
         .map((snapshot) => CardModel.fromDoc(snapshot));
   }
+
+  static void deleteCard(CardModel card, String uid) {
+    cardsRef
+        .document(uid)
+        .collection('userCards')
+        .document(card.id)
+        .delete();
+  }
 }
 
 

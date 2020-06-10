@@ -10,6 +10,7 @@ import 'package:moneymangement/services/database.dart';
 import 'package:moneymangement/utilities/currency.dart';
 import 'package:moneymangement/utilities/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:moneymangement/wrapper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Transaction extends StatefulWidget {
@@ -24,13 +25,44 @@ class Transaction extends StatefulWidget {
 
 class _TransactionState extends State<Transaction> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController _pinHolder = TextEditingController();
   bool hasError = false;
   String currentText = '';
-  String _pin = '';
-  bool _isLoading = false;
   int money = 0;
   User userReceiver;
-//  String transId;
+  String _pin = '';
+  bool _checkPin = false;
+
+  _verifyPin() {
+    print('verify pin');
+    if (_pin == widget.user.pin) {
+      print('vo submit');
+      _submit();
+      print(money);
+      print(widget.user.money);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ResultTransaction( moneyTrans: money,
+                moneyUser: widget.user.money,
+                nameReceiver: userReceiver.name,
+                idTrans: '3458364913854',)
+          ),
+              (Route<dynamic> route) => false
+
+      );
+    } else {
+      _checkPin = true;
+    }
+  }
+
+  String _resultPin() {
+    if (_checkPin == true) {
+      _pinHolder.clear();
+      return 'Bạn nhập sai mã PIN';
+    }
+    return '';
+  }
 
   _infoReceiver() {
     print('info ${userReceiver.name}');
@@ -118,70 +150,6 @@ class _TransactionState extends State<Transaction> {
     );
   }
 
-  Future<void> _showErrorDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Giao dịch thất bại'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Bạn nhập sai mã PIN'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Thử lại'),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Transaction(
-                              uidReceiver: widget.uidReceiver,
-                              user: widget.user,
-                            )));
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  _verifyPin() {
-    print('verify pin');
-    if (_formKey.currentState.validate() && !_isLoading) {
-      _formKey.currentState.save();
-
-      setState(() {
-        _isLoading = true;
-      });
-
-      if (_pin == widget.user.pin) {
-        print('vo submit');
-        _submit();
-        print(money);
-        print( widget.user.money);
-        print(userReceiver.name);
-//        print(transId);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ResultTransaction(
-                      moneyTrans: money,
-                      moneyUser: widget.user.money,
-                      nameReceiver: userReceiver.name,
-                      idTrans: '3458364913854',
-                    )));
-        print('da qua result');
-      } else
-        _showErrorDialog();
-    }
-  }
-
   _submit() async {
     print('vo submit');
     // Create transaction
@@ -196,9 +164,6 @@ class _TransactionState extends State<Transaction> {
 
     DatabaseService.createTransactionSender(trans);
     DatabaseService.createTransactionReceiver(trans);
-
-//    transId = trans.id;
-//    print('tran ne ${transId}');
 
     //update money for 2 users
 
@@ -225,6 +190,14 @@ class _TransactionState extends State<Transaction> {
     // Database update
     DatabaseService.updateUser(userSender);
     DatabaseService.updateUser(userReceiver);
+
+    Navigator.pop(context);
+  }
+
+  @override
+  void dispose() {
+    _pinHolder.dispose();
+    super.dispose();
   }
 
   @override
@@ -253,7 +226,9 @@ class _TransactionState extends State<Transaction> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40.0),
                   child: PinCodeTextField(
+                    controller: _pinHolder,
                     onChanged: (input) {
+                      print('pin holder $_pinHolder');
                       _pin = input;
                       print(_pin);
                       if (_pin.length == 6) _verifyPin();
@@ -273,8 +248,13 @@ class _TransactionState extends State<Transaction> {
                     ),
                   ),
                 ),
+                SizedBox(height: 20),
+                Text(
+                  _resultPin(),
+                  style: TextStyle(color: Colors.red),
+                ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: FlatButton.icon(
                       onPressed: () {},
                       icon: Icon(Icons.fingerprint),
@@ -289,7 +269,7 @@ class _TransactionState extends State<Transaction> {
                       )),
                 ),
                 FlatButton(
-                  //onPressed: _verifyPin,
+                  onPressed: _verifyPin,
                   child: Text(
                     'Quên mật khẩu?',
                     style: GoogleFonts.muli(
@@ -305,19 +285,20 @@ class _TransactionState extends State<Transaction> {
           });
     }
 
-    //print('id receiver: ${widget.uid_receiver}');
     return Form(
       key: _formKey,
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Giao dịch',
+            title: Text(
+              'Giao dịch',
               style: GoogleFonts.muli(
                   textStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  )),),
-            backgroundColor:Color(0xff5e63b6),
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              )),
+            ),
+            backgroundColor: Color(0xff5e63b6),
           ),
           body: Padding(
             padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -425,7 +406,7 @@ class _TransactionState extends State<Transaction> {
                               )),
                             ),
                             Text(
-                              '1,000,000đ',
+                              '${NumberFormat("#,###", "vi").format(widget.user.money)}đ',
                               style: GoogleFonts.muli(
                                   textStyle: TextStyle(
                                 color: Colors.grey,
@@ -457,8 +438,9 @@ class _TransactionState extends State<Transaction> {
                           borderRadius: BorderRadius.circular(10.0)),
                       color: Color(0xff5e63b6),
                       onPressed: () async {
-                        if (_formKey.currentState.validate())
+                        if (_formKey.currentState.validate()) {
                           _showVerifyPasswordPanel();
+                        }
                       },
                       padding: EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 80.0),

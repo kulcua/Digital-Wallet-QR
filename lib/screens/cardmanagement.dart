@@ -41,6 +41,7 @@ class _CardManagementState extends State<CardManagement> {
       print(card.id);
       cardList.add(
         CardTile(
+          state: 'deleteCard',
           user: widget.user,
           cardId: card.id,
         ),
