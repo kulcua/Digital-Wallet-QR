@@ -88,11 +88,9 @@
 
 ## Yêu cầu thiết bị
 * Android:
-- Gradle: 5.6.2
-- Min Sdk: 21
-- Target Sdk: 29
-
-
+  - Gradle: 5.6.2
+  - Min Sdk: 21
+  - Target Sdk: 29
 ## Thư viện và công nghệ
 * Ngôn ngữ: Dart
 * Framework: Flutter
