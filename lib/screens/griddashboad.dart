@@ -2,9 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/models/user_model.dart';
+import 'package:moneymangement/screens/cardmanagement.dart';
+import 'package:moneymangement/screens/cash_in.dart';
+import 'package:moneymangement/screens/cash_out.dart';
 import 'package:moneymangement/screens/createQR.dart';
 import 'package:moneymangement/screens/result_transaction.dart';
 import 'package:moneymangement/screens/transaction.dart';
+import 'package:moneymangement/screens/transfer.dart';
 import 'package:moneymangement/utilities/constants.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
@@ -34,13 +38,23 @@ class _GridDashboardState extends State<GridDashboard> {
   );
 
   Item item4 = new Item(
+    title: 'Rút tiền',
+    img: 'images/losemoney.png',
+  );
+
+  Item item5 = new Item(
+    title: 'Chuyển tiền',
+    img: 'images/exchangemoney.png',
+  );
+
+  Item item6 = new Item(
     title: 'Thẻ',
     img: 'images/wallet.png',
   );
 
   @override
   Widget build(BuildContext context) {
-    List<Item> myItem = [item1, item2, item3, item4];
+    List<Item> myItem = [item1, item2, item3, item4, item5, item6];
     return Flexible(
       child: GridView.count(
         childAspectRatio: 1.0,
@@ -58,7 +72,7 @@ class _GridDashboardState extends State<GridDashboard> {
                 String result_qr = await scanner.scan();
                 if (result_qr == null) {
                   print('null r');
-                } else if (result_qr != widget.user.id){
+                } else if (result_qr != widget.user.id) {
                   print('resulltnenenene$result_qr');
                   Navigator.push(
                       context,
@@ -68,34 +82,56 @@ class _GridDashboardState extends State<GridDashboard> {
                                 user: widget.user,
                               )));
                 }
-              } else if (data.title == 'Nạp tiền')
+              } else if (data.title == 'Chuyển tiền')
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ResultTransaction()));
-
-//              else if (data.title == 'Wallet')
-//                Navigator.push(context,MaterialPageRoute(builder: (context)=> Scanning()));
+                        builder: (context) => Transfer(
+                              user: widget.user,
+                            )));
+              else if (data.title == 'Thẻ')
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CardManagement(
+                              user: widget.user,
+                            )));
+              else if (data.title == 'Nạp tiền')
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CashIn(
+                              user: widget.user,
+                            )));
+              else if (data.title == 'Rút tiền')
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CashOut(
+                          user: widget.user,
+                        )));
             },
             child: Container(
                 decoration: BoxDecoration(
-                    color: Color(0xfff1d1d1),
-                    borderRadius: BorderRadius.circular(10.0)),
+                  border: Border.all(color: Color(0xff5e63b6), width: 2.0),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset(
                       data.img,
-                      width: 42,
+                      width: 70,
                     ),
                     SizedBox(
                       height: 14,
                     ),
                     Text(
                       data.title,
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.muli(
                           textStyle: TextStyle(
-                        color: Colors.brown[800],
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       )),

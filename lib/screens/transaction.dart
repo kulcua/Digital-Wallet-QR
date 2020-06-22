@@ -10,6 +10,7 @@ import 'package:moneymangement/services/database.dart';
 import 'package:moneymangement/utilities/currency.dart';
 import 'package:moneymangement/utilities/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:moneymangement/wrapper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Transaction extends StatefulWidget {
@@ -24,13 +25,44 @@ class Transaction extends StatefulWidget {
 
 class _TransactionState extends State<Transaction> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController _pinHolder = TextEditingController();
   bool hasError = false;
   String currentText = '';
-  String _pin = '';
-  bool _isLoading = false;
   int money = 0;
   User userReceiver;
-//  String transId;
+  String _pin = '';
+  bool _checkPin = false;
+
+  _verifyPin() {
+    print('verify pin');
+    if (_pin == widget.user.pin) {
+      print('vo submit');
+      _submit();
+      print(money);
+      print(widget.user.money);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ResultTransaction( moneyTrans: money,
+                moneyUser: widget.user.money,
+                nameReceiver: userReceiver.name,
+                idTrans: '3458364913854',)
+          ),
+              (Route<dynamic> route) => false
+
+      );
+    } else {
+      _checkPin = true;
+    }
+  }
+
+  String _resultPin() {
+    if (_checkPin == true) {
+      _pinHolder.clear();
+      return 'Bạn nhập sai mã PIN';
+    }
+    return '';
+  }
 
   _infoReceiver() {
     print('info ${userReceiver.name}');
@@ -45,18 +77,18 @@ class _TransactionState extends State<Transaction> {
                 children: <Widget>[
                   Text(
                     'Tên người nhận',
-                    style: GoogleFonts.openSans(
+                    style: GoogleFonts.muli(
                         textStyle: TextStyle(
-                      color: Colors.brown[300],
+                      color: Colors.grey,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     )),
                   ),
                   Text(
                     userReceiver.name,
-                    style: GoogleFonts.openSans(
+                    style: GoogleFonts.muli(
                         textStyle: TextStyle(
-                      color: Colors.brown[800],
+                      color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     )),
@@ -69,18 +101,18 @@ class _TransactionState extends State<Transaction> {
                 children: <Widget>[
                   Text(
                     'Số điện thoại',
-                    style: GoogleFonts.openSans(
+                    style: GoogleFonts.muli(
                         textStyle: TextStyle(
-                      color: Colors.brown[300],
+                      color: Colors.grey,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     )),
                   ),
                   Text(
                     userReceiver.phone,
-                    style: GoogleFonts.openSans(
+                    style: GoogleFonts.muli(
                         textStyle: TextStyle(
-                      color: Colors.brown[800],
+                      color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     )),
@@ -93,18 +125,18 @@ class _TransactionState extends State<Transaction> {
                 children: <Widget>[
                   Text(
                     'Thời gian giao dịch',
-                    style: GoogleFonts.openSans(
+                    style: GoogleFonts.muli(
                         textStyle: TextStyle(
-                      color: Colors.brown[300],
+                      color: Colors.grey,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     )),
                   ),
                   Text(
                     DateFormat('HH:mm dd-MM-yyyy').format(DateTime.now()),
-                    style: GoogleFonts.openSans(
+                    style: GoogleFonts.muli(
                         textStyle: TextStyle(
-                      color: Colors.brown[800],
+                      color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     )),
@@ -118,70 +150,6 @@ class _TransactionState extends State<Transaction> {
     );
   }
 
-  Future<void> _showErrorDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Giao dịch thất bại'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Bạn nhập sai mã PIN'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Thử lại'),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Transaction(
-                              uidReceiver: widget.uidReceiver,
-                              user: widget.user,
-                            )));
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  _verifyPin() {
-    print('verify pin');
-    if (_formKey.currentState.validate() && !_isLoading) {
-      _formKey.currentState.save();
-
-      setState(() {
-        _isLoading = true;
-      });
-
-      if (_pin == widget.user.pin) {
-        print('vo submit');
-        _submit();
-        print(money);
-        print( widget.user.money);
-        print(userReceiver.name);
-//        print(transId);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ResultTransaction(
-                      moneyTrans: money,
-                      moneyUser: widget.user.money,
-                      nameReceiver: userReceiver.name,
-                      idTrans: '3458364913854',
-                    )));
-        print('da qua result');
-      } else
-        _showErrorDialog();
-    }
-  }
-
   _submit() async {
     print('vo submit');
     // Create transaction
@@ -193,10 +161,9 @@ class _TransactionState extends State<Transaction> {
       time: Timestamp.fromDate(DateTime.now()),
       typeTransaction: 'Scan QR',
     );
-    DatabaseService.createTransaction(trans);
 
-//    transId = trans.id;
-//    print('tran ne ${transId}');
+    DatabaseService.createTransactionSender(trans);
+    DatabaseService.createTransactionReceiver(trans);
 
     //update money for 2 users
 
@@ -223,6 +190,14 @@ class _TransactionState extends State<Transaction> {
     // Database update
     DatabaseService.updateUser(userSender);
     DatabaseService.updateUser(userReceiver);
+
+    Navigator.pop(context);
+  }
+
+  @override
+  void dispose() {
+    _pinHolder.dispose();
+    super.dispose();
   }
 
   @override
@@ -240,9 +215,9 @@ class _TransactionState extends State<Transaction> {
                   margin: EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     'Nhập mã PIN',
-                    style: GoogleFonts.openSans(
+                    style: GoogleFonts.muli(
                         textStyle: TextStyle(
-                      color: Colors.brown[800],
+                      color: Colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                     )),
@@ -251,7 +226,9 @@ class _TransactionState extends State<Transaction> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40.0),
                   child: PinCodeTextField(
+                    controller: _pinHolder,
                     onChanged: (input) {
+                      print('pin holder $_pinHolder');
                       _pin = input;
                       print(_pin);
                       if (_pin.length == 6) _verifyPin();
@@ -263,22 +240,27 @@ class _TransactionState extends State<Transaction> {
                     obsecureText: true,
                     animationType: AnimationType.fade,
                     pinTheme: PinTheme(
-                      selectedColor: Colors.brown,
+                      selectedColor: Colors.black,
                       inactiveColor: Colors.grey,
-                      activeColor: Colors.pink[100],
+                      activeColor: Color(0xff5e63b6),
                       fieldHeight: 50,
                       fieldWidth: 40,
                     ),
                   ),
                 ),
+                SizedBox(height: 20),
+                Text(
+                  _resultPin(),
+                  style: TextStyle(color: Colors.red),
+                ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: FlatButton.icon(
                       onPressed: () {},
                       icon: Icon(Icons.fingerprint),
                       label: Text(
                         'Xác thực bằng vân tay',
-                        style: GoogleFonts.openSans(
+                        style: GoogleFonts.muli(
                             textStyle: TextStyle(
                           color: Colors.black,
                           fontSize: 12,
@@ -287,10 +269,10 @@ class _TransactionState extends State<Transaction> {
                       )),
                 ),
                 FlatButton(
-                  //onPressed: _verifyPin,
+                  onPressed: _verifyPin,
                   child: Text(
                     'Quên mật khẩu?',
-                    style: GoogleFonts.openSans(
+                    style: GoogleFonts.muli(
                         textStyle: TextStyle(
                       color: Colors.blue,
                       fontSize: 12,
@@ -303,14 +285,20 @@ class _TransactionState extends State<Transaction> {
           });
     }
 
-    //print('id receiver: ${widget.uid_receiver}');
     return Form(
       key: _formKey,
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Giao dịch',
-                style: TextStyle(color: Colors.brown[800], fontSize: 18)),
-            backgroundColor: Color(0xfff1d1d1),
+            title: Text(
+              'Giao dịch',
+              style: GoogleFonts.muli(
+                  textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              )),
+            ),
+            backgroundColor: Color(0xff5e63b6),
           ),
           body: Padding(
             padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -321,9 +309,9 @@ class _TransactionState extends State<Transaction> {
                     padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                     child: Text(
                       'NHẬP SỐ TIỀN',
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.muli(
                           textStyle: TextStyle(
-                        color: Colors.brown[800],
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w300,
                       )),
@@ -344,7 +332,7 @@ class _TransactionState extends State<Transaction> {
                       validator: (val) {
                         if (val.isEmpty) return 'Hãy nhập số tiền';
                         if (money < 1000) {
-                          return 'Số tiền phải lớn hơn 1,000';
+                          return 'Số tiền phải lớn hơn 1.000';
                         }
                         if (money > widget.user.money) {
                           return 'Số dư trong ví không đủ';
@@ -352,9 +340,9 @@ class _TransactionState extends State<Transaction> {
                         return null;
                       },
                       keyboardType: TextInputType.number,
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.muli(
                           textStyle: TextStyle(
-                        color: Colors.brown[800],
+                        color: Colors.black,
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       )),
@@ -364,9 +352,9 @@ class _TransactionState extends State<Transaction> {
                     padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
                     child: Text(
                       'THÔNG TIN NGƯỜI NHẬN',
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.muli(
                           textStyle: TextStyle(
-                        color: Colors.brown[800],
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w300,
                       )),
@@ -389,9 +377,9 @@ class _TransactionState extends State<Transaction> {
                     padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
                     child: Text(
                       'NGUỒN TIỀN',
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.muli(
                           textStyle: TextStyle(
-                        color: Colors.brown[800],
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w300,
                       )),
@@ -403,25 +391,25 @@ class _TransactionState extends State<Transaction> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                           child: Icon(Icons.account_balance_wallet,
-                              size: 45.0, color: Color(0xff7d5a5a)),
+                              size: 45.0, color: Color(0xff5e63b6)),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               'Ví điện tử',
-                              style: GoogleFonts.openSans(
+                              style: GoogleFonts.muli(
                                   textStyle: TextStyle(
-                                color: Colors.brown[800],
+                                color: Colors.black,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
                               )),
                             ),
                             Text(
-                              '1,000,000đ',
-                              style: GoogleFonts.openSans(
+                              '${NumberFormat("#,###", "vi").format(widget.user.money)}đ',
+                              style: GoogleFonts.muli(
                                   textStyle: TextStyle(
-                                color: Colors.brown[300],
+                                color: Colors.grey,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
                               )),
@@ -432,7 +420,7 @@ class _TransactionState extends State<Transaction> {
                         FlatButton(
                           child: Text(
                             'Thay đổi',
-                            style: GoogleFonts.openSans(
+                            style: GoogleFonts.muli(
                                 textStyle: TextStyle(
                               color: Colors.blue[500],
                               fontSize: 14,
@@ -448,18 +436,19 @@ class _TransactionState extends State<Transaction> {
                     child: RaisedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
-                      color: Color(0xfff1d1d1),
+                      color: Color(0xff5e63b6),
                       onPressed: () async {
-                        if (_formKey.currentState.validate())
+                        if (_formKey.currentState.validate()) {
                           _showVerifyPasswordPanel();
+                        }
                       },
                       padding: EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 80.0),
                       child: Text(
                         "Xác nhận",
-                        style: GoogleFonts.openSans(
+                        style: GoogleFonts.muli(
                             textStyle: TextStyle(
-                          color: Colors.brown[800],
+                          color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         )),

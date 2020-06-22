@@ -30,12 +30,3 @@ class TransactionModel {
     );
   }
 }
-
-
-
-
-
-//
-
-
-

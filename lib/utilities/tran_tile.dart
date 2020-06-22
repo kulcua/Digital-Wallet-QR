@@ -21,22 +21,39 @@ class _TranTileState extends State<TranTile> {
   Stream<TransactionModel> tranAsyncer;
   TransactionModel _tran;
   User userReceiver;
+  User userSender;
 
   void initState() {
     tranAsyncer = DatabaseService.getTranStream(widget.tranid, widget.user);
     super.initState();
   }
 
-  String checkState(String state)
-  {
-    if(state == 'success')
+  String checkStateTitle(String state, String userId, String idReceiver) {
+    if (state == 'success' && (userId != idReceiver))
       return 'Chuyển tiền thành công';
+    else if (state == 'success' && (userId == idReceiver))
+      return 'Bạn đã nhận được tiền';
     return null;
+  }
+
+  String checkStateText(String userId, String idReceiver) {
+    if (userId != idReceiver)
+      return 'Bạn đã chuyển ${NumberFormat("#,###", "vi").format(_tran.money)}đ cho ${userReceiver.name}';
+    else if (userId == idReceiver)
+      return 'Bạn đã nhận ${NumberFormat("#,###", "vi").format(_tran.money)}đ từ ${userSender.name}';
+  }
+
+  String checkStateImage(String userId, String idReceiver)
+  {
+    if (userId != idReceiver)
+      return 'images/givemoney.png';
+    else if (userId == idReceiver)
+      return 'images/takemoney.png';
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<TransactionModel>(
+    return  StreamBuilder<TransactionModel>(
         stream: tranAsyncer,
         builder: (context, snapshot) {
           print('snapshot tile ${snapshot.hasData}');
@@ -49,45 +66,56 @@ class _TranTileState extends State<TranTile> {
                 context,
                 MaterialPageRoute(
                     builder: (_) => ResultTransaction(
-                          moneyTrans: _tran.money,
-                          moneyUser: widget.user.money,
-                          nameReceiver: userReceiver.name,
-                          idTrans: '3458364913854',
-                        )),
+                      moneyTrans: _tran.money,
+                      moneyUser: widget.user.money,
+                      nameReceiver: userReceiver.name,
+                      idTrans: '3458364913854',
+                    )),
               ),
-              child:Container(
+              child: Container(
                 child: Padding(
                   padding: const EdgeInsets.all(6.0),
                   child: ListTile(
                     leading: CircleAvatar(
-                      radius: 20,
+                      radius: 30,
                       backgroundColor: Colors.white,
-                      child: Icon(Icons.check, color: Colors.green,),
+                      backgroundImage: AssetImage(checkStateImage(widget.user.id, _tran.idReceiver)),
                     ),
-                    title: Text(
-                      checkState(_tran.state),
-                      style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
+                    title: FutureBuilder(
+                        future:
+                        DatabaseService.getUserWithId(_tran.idReceiver),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (!snapshot.hasData) {
+                            return SizedBox.shrink();
+                          }
+                          userReceiver = snapshot.data;
+                          return Text(
+                            checkStateTitle(_tran.state, widget.user.id, _tran.idReceiver),
+                            style: GoogleFonts.muli(
+                              textStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          );
+                        }),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         FutureBuilder(
-                            future: DatabaseService.getUserWithId(_tran.idReceiver),
+                            future:
+                            DatabaseService.getUserWithId(_tran.idSender),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (!snapshot.hasData) {
                                 return SizedBox.shrink();
                               }
-                              userReceiver = snapshot.data;
+                              userSender = snapshot.data;
                               return Text(
-                                'Bạn đã chuyển ${NumberFormat("#,###","vi").format(_tran.money)}đ cho ${userReceiver.name}',
-                                style: GoogleFonts.openSans(
+                                checkStateText(widget.user.id, _tran.idReceiver),
+                                style: GoogleFonts.muli(
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -97,11 +125,10 @@ class _TranTileState extends State<TranTile> {
                             }),
                         SizedBox(height: 5.0),
                         Text(
-                          DateFormat('dd-MM-yyyy')
-                              .add_jm()
-                              .format(_tran.time.toDate(),
+                          DateFormat('dd-MM-yyyy').add_jm().format(
+                            _tran.time.toDate(),
                           ),
-                          style: GoogleFonts.openSans(
+                          style: GoogleFonts.muli(
                               textStyle: TextStyle(
                                 color: Colors.black,
                                 fontSize: 14,
@@ -115,9 +142,7 @@ class _TranTileState extends State<TranTile> {
                 ),
                 decoration: new BoxDecoration(
                     border: new Border(
-                        bottom: new BorderSide(color: Colors.grey[300])
-                    )
-                ),
+                        bottom: new BorderSide(color: Colors.grey[300]))),
               ),
             );
           }

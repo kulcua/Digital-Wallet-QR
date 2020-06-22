@@ -60,9 +60,9 @@ class _InputPinState extends State<InputPin> {
               margin: EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 'Nhập mã PIN',
-                style: GoogleFonts.openSans(
+                style: GoogleFonts.muli(
                     textStyle: TextStyle(
-                  color: Colors.brown[800],
+                  color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                 )),
@@ -96,14 +96,14 @@ class _InputPinState extends State<InputPin> {
               onPressed: _submit,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
-              color: Color(0xfff1d1d1),
+              color: Color(0xff5e63b6),
               padding:
               EdgeInsets.symmetric(vertical: 10.0, horizontal: 80.0),
               child: Text(
                 "Xác nhận",
-                style: GoogleFonts.openSans(
+                style: GoogleFonts.muli(
                     textStyle: TextStyle(
-                      color: Colors.brown[800],
+                      color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     )),

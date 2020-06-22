@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/push_notification.dart';
 import 'package:moneymangement/services/auth.dart';
 
@@ -33,28 +34,27 @@ class _SignInState extends State<SignIn> {
             children: <Widget>[
               Text(
                 'Chào Bò tui!',
-                style: TextStyle(
-                  fontFamily: 'Source Sans Pro',
-                  fontSize: 40.0,
-                  color: Color(0xff7d5a5a),
-                  fontWeight: FontWeight.bold,
-                ),
+                style: GoogleFonts.lobster(
+                    textStyle: TextStyle(
+                  color: Color(0xff5e63b6),
+                  fontSize: 50,
+                  fontWeight: FontWeight.w500,
+                )),
               ),
               Text(
                 '0943523565',
-                style: TextStyle(
-                  fontFamily: 'Source Sans Pro',
-                  color: Color(0xff7d5a5a),
-                  fontSize: 20.0,
-                  letterSpacing: 2.5,
+                style: GoogleFonts.muli(
+                    textStyle: TextStyle(
+                  color: Color(0xff5e63b6),
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
-                ),
+                )),
               ),
               SizedBox(
                 height: 20.0,
                 width: 150.0,
                 child: Divider(
-                  color: Color(0xff7d5a5a),
+                  color: Color(0xff5e63b6),
                 ),
               ),
               Container(
@@ -73,9 +73,8 @@ class _SignInState extends State<SignIn> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                 child: TextFormField(
-                  validator: (val) => val.length < 6
-                      ? 'Mật khẩu phải hơn 6 kí tự'
-                      : null,
+                  validator: (val) =>
+                      val.length < 6 ? 'Mật khẩu phải hơn 6 kí tự' : null,
                   onChanged: (val) {
                     setState(() => password = val);
                   },
@@ -88,7 +87,7 @@ class _SignInState extends State<SignIn> {
               ),
               RaisedButton(
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 60.0),
-                color: Color(0xff7d5a5a),
+                color: Color(0xff5e63b6),
                 onPressed: () async {
                   noti.init();
                   if (_formKey.currentState.validate()) {
@@ -103,16 +102,26 @@ class _SignInState extends State<SignIn> {
                 },
                 child: Text(
                   "Đăng nhập",
-                  style: TextStyle(
-                      fontSize: 17.0,
-                      fontFamily: 'Source Sans Pro',
-                      color: Colors.white),
+                  style: GoogleFonts.muli(
+                      textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  )),
                 ),
               ),
               FlatButton.icon(
                   onPressed: () {},
-                  icon: Icon(Icons.fingerprint),
-                  label: Text('Mở khoá bằng vân tay')),
+                  icon: Icon(Icons.fingerprint, color: Color(0xff142850),),
+                  label: Text(
+                    'Mở khoá bằng vân tay',
+                    style: GoogleFonts.muli(
+                        textStyle: TextStyle(
+                      color: Color(0xff142850),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    )),
+                  )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -122,6 +131,12 @@ class _SignInState extends State<SignIn> {
                     },
                     child: Text(
                       "Quên mật khẩu",
+                      style: GoogleFonts.muli(
+                          textStyle: TextStyle(
+                            color: Color(0xff142850),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          )),
                     ),
                   ),
                   FlatButton(
@@ -130,6 +145,12 @@ class _SignInState extends State<SignIn> {
                     },
                     child: Text(
                       "Đăng kí",
+                      style: GoogleFonts.muli(
+                          textStyle: TextStyle(
+                            color: Color(0xff142850),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          )),
                     ),
                   )
                 ],

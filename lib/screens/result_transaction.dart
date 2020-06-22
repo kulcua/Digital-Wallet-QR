@@ -18,7 +18,9 @@ class ResultTransaction extends StatefulWidget {
   _ResultTransactionState createState() => _ResultTransactionState();
 }
 
+
 class _ResultTransactionState extends State<ResultTransaction> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +29,7 @@ class _ResultTransactionState extends State<ResultTransaction> {
           Container(
             height: 220.0,
             width: double.infinity,
-            color: Color(0xfff1d1d1),
+            color: Color(0xff5e63b6),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -45,9 +47,9 @@ class _ResultTransactionState extends State<ResultTransaction> {
                 ),
                 Text(
                   'Giao dịch thành công',
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.muli(
                       textStyle: TextStyle(
-                    color: Colors.brown[800],
+                    color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   )),
@@ -61,9 +63,9 @@ class _ResultTransactionState extends State<ResultTransaction> {
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
                   'Bạn đã thanh toán thành công ${ NumberFormat("#,###","vi").format(widget.moneyTrans)}đ cho ${widget.nameReceiver}',
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.muli(
                       textStyle: TextStyle(
-                    color: Colors.brown[800],
+                    color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   )),
@@ -83,18 +85,18 @@ class _ResultTransactionState extends State<ResultTransaction> {
                     children: <Widget>[
                       Text(
                         'Số dư trong ví',
-                        style: GoogleFonts.openSans(
+                        style: GoogleFonts.muli(
                             textStyle: TextStyle(
-                          color: Colors.brown[300],
+                          color: Colors.grey,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         )),
                       ),
                       Text(
                         NumberFormat("#,###","vi").format(widget.moneyUser-widget.moneyTrans),
-                        style: GoogleFonts.openSans(
+                        style: GoogleFonts.muli(
                             textStyle: TextStyle(
-                          color: Colors.brown[800],
+                          color: Colors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         )),
@@ -107,18 +109,18 @@ class _ResultTransactionState extends State<ResultTransaction> {
                     children: <Widget>[
                       Text(
                         'Mã giao dịch',
-                        style: GoogleFonts.openSans(
+                        style: GoogleFonts.muli(
                             textStyle: TextStyle(
-                          color: Colors.brown[300],
+                          color: Colors.grey,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         )),
                       ),
                       Text(
                         widget.idTrans,
-                        style: GoogleFonts.openSans(
+                        style: GoogleFonts.muli(
                             textStyle: TextStyle(
-                          color: Colors.brown[800],
+                          color: Colors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         )),
@@ -134,20 +136,24 @@ class _ResultTransactionState extends State<ResultTransaction> {
             child: RaisedButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
-              color: Color(0xfff1d1d1),
+              color: Color(0xff5e63b6),
               onPressed: ()
               {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Wrapper()));
+//                Navigator.popUntil(context, ModalRoute.withName('/wrapper'));
+//                Navigator.pushReplacement(context,
+//                    MaterialPageRoute(builder: (context) => Wrapper()));
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => Wrapper()),
+                      (Route<dynamic> route) => false,
+                );
               },
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 80.0),
               child: Text(
                 'Màn hình chính',
-                style: GoogleFonts.openSans(
+                style: GoogleFonts.muli(
                     textStyle: TextStyle(
-                  color: Colors.brown[800],
+                  color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 )),

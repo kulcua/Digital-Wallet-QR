@@ -29,18 +29,18 @@ class _MainPageState extends State<MainPage> {
               children: <Widget>[
                 Text(
                   'Xin chào,',
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.muli(
                       textStyle: TextStyle(
-                    color: Color(0xff7d5a5a),
+                    color: Colors.black,
                     fontSize: 18,
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w400,
                   )),
                 ),
                 Text(
                   user.name,
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.muli(
                     textStyle: TextStyle(
-                      color: Colors.brown[700],
+                      color: Colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -53,18 +53,18 @@ class _MainPageState extends State<MainPage> {
               children: <Widget>[
                 Text(
                   NumberFormat("#,###","vi").format(user.money),
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.muli(
                       textStyle: TextStyle(
-                    color: Colors.brown[700],
+                    color: Colors.black,
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
                   )),
                 ),
                 Text(
                   'VND',
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.muli(
                     textStyle: TextStyle(
-                      color: Colors.brown[300],
+                      color: Colors.black,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),

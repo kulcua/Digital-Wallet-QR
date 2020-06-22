@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/services/auth.dart';
 
 class SignUp extends StatefulWidget {
@@ -29,116 +30,135 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Đăng kí',
-              style: TextStyle(
-                fontFamily: 'Source Sans Pro',
-                fontSize: 40.0,
-                color: Color(0xff7d5a5a),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-              width: 150.0,
-              child: Divider(
-                color: Color(0xff7d5a5a),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: TextFormField(
-                validator: (val) => val.isEmpty ? 'Nhập email' : null,
-                onChanged: (val) {
-                  setState(() => email = val);
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Đăng kí',
+                  style: GoogleFonts.muli(
+                      textStyle: TextStyle(
+                        color: Color(0xff5e63b6),
+                        fontSize: 40,
+                        fontWeight: FontWeight.w700,
+                      )),
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: TextFormField(
-                validator: (val) =>
+                SizedBox(
+                  height: 20.0,
+                  width: 150.0,
+                  child: Divider(
+                    color: Color(0xff5e63b6),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 25.0),
+                  child: TextFormField(
+                    validator: (val) => val.isEmpty ? 'Nhập email' : null,
+                    onChanged: (val) {
+                      setState(() => email = val);
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Email',
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 25.0),
+                  child: TextFormField(
+                    validator: (val) =>
                     val.length < 6 ? 'Mật khẩu phải hơn 6 kí tự' : null,
-                onChanged: (val) {
-                  setState(() => password = val);
-                },
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Mật khẩu',
+                    onChanged: (val) {
+                      setState(() => password = val);
+                    },
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Mật khẩu',
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Tên của bạn',
+                Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 25.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Tên của bạn',
+                    ),
+                    onChanged: (val) {
+                      setState(() => name = val);
+                    },
+                  ),
                 ),
-                onChanged: (val) {
-                  setState(() => name = val);
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Số điện thoại',
+                Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 25.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Số điện thoại',
+                    ),
+                    onChanged: (val) {
+                      setState(() => phone = val);
+                    },
+                  ),
                 ),
-                onChanged: (val) {
-                  setState(() => phone = val);
-                },
-              ),
+                RaisedButton(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 60.0),
+                    color: Color(0xff5e63b6),
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        dynamic result = await _auth
+                            .registerWithEmailAndPassword(
+                            context,
+                            email,
+                            password,
+                            name,
+                            money,
+                            phone,
+                            pin);
+                        if (result == null) {
+                          setState(() {
+                            error = 'Email không tồn tại';
+                          });
+                        }
+                      }
+                    },
+                    child: Text(
+                      "Đăng kí",
+                      style: GoogleFonts.muli(
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                          )),)
+                ),
+                FlatButton(
+                  child: Text('Đăng nhập',
+                      style: GoogleFonts.muli(
+                          textStyle: TextStyle(
+                            color: Color(0xff142850),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          )),),
+                  onPressed: () {
+                    widget.toggleView();
+                  },
+                ),
+                SizedBox(height: 12.0),
+                Text(
+                  error,
+                  style: TextStyle(color: Colors.red, fontSize: 14.0),
+                )
+              ],
             ),
-            RaisedButton(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 60.0),
-              color: Color(0xff7d5a5a),
-              onPressed: () async {
-                if (_formKey.currentState.validate()) {
-                  dynamic result = await _auth.registerWithEmailAndPassword(
-                      context, email, password, name, money, phone, pin);
-                  if (result == null) {
-                    setState(() {
-                      error = 'Email không tồn tại';
-                    });
-                  }
-                }
-              },
-              child: Text(
-                "Đăng kí",
-                style: TextStyle(
-                    fontSize: 17.0,
-                    fontFamily: 'Source Sans Pro',
-                    color: Colors.white),
-              ),
-            ),
-            FlatButton(
-              child: Text('Đăng nhập'),
-              onPressed: () {
-                widget.toggleView();
-              },
-            ),
-            SizedBox(height: 12.0),
-            Text(
-              error,
-              style: TextStyle(color: Colors.red, fontSize: 14.0),
-            )
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 }
