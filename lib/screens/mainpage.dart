@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moneymangement/models/user.dart';
 import 'package:moneymangement/models/user_model.dart';
+import 'package:moneymangement/services/database.dart';
 import 'package:provider/provider.dart';
 import 'griddashboad.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +17,21 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  User _profileUser;
+
+  @override
+  void initState()
+  {
+    super.initState();
+    _setupProfileUser();
+  }
+
+  _setupProfileUser() async {
+    User profileUser = await DatabaseService.getUserWithId(widget.user.id);
+    setState(() {
+      _profileUser = profileUser;
+    });
+  }
 
   buildProfileInfo(User user) {
     print('user info ${user.name}');

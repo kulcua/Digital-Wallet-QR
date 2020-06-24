@@ -71,6 +71,7 @@ class AuthServices {
   //register new
   Future<String> registerWithEmailAndPassword(
       BuildContext context,
+      String id,
       String email,
       String password,
       String name,

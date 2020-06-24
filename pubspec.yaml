@@ -23,7 +23,8 @@ dependencies:
   intl: ^0.16.1
   pin_code_fields: ^3.0.1
   flutter_credit_card: ^0.1.3
-
+  flutter_local_notifications: ^1.4.4+1
+  fluttertoast: ^4.0.1
 
 
 dev_dependencies:

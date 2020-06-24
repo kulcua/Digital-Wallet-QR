@@ -152,6 +152,8 @@ class _TransactionState extends State<Transaction> {
 
   _submit() async {
     print('vo submit');
+    print('token receiver ${userReceiver.name}');
+    print('token receiver ${userReceiver.pushToken}');
     // Create transaction
     TransactionModel trans = TransactionModel(
       idSender: widget.user.id,
@@ -160,36 +162,15 @@ class _TransactionState extends State<Transaction> {
       money: money,
       time: Timestamp.fromDate(DateTime.now()),
       typeTransaction: 'Scan QR',
+      pushToken: userReceiver.pushToken
     );
 
     DatabaseService.createTransactionSender(trans);
     DatabaseService.createTransactionReceiver(trans);
 
     //update money for 2 users
-
-    //sender
-    print('sender money ${widget.user.name}');
-    print('sender money ${widget.user.money}');
-    User userSender = User(
-      id: widget.user.id,
-      name: widget.user.name,
-      money: widget.user.money - money,
-      pin: widget.user.pin,
-    );
-
-    //receiver
-    print('receiver money ${userReceiver.name}');
-    print('receiver money ${userReceiver.money}');
-    userReceiver = User(
-      id: userReceiver.id,
-      name: userReceiver.name,
-      money: userReceiver.money + money,
-      pin: userReceiver.pin,
-    );
-
-    // Database update
-    DatabaseService.updateUser(userSender);
-    DatabaseService.updateUser(userReceiver);
+    usersRef.document(widget.user.id).updateData({'money':  widget.user.money - money});
+    usersRef.document(widget.uidReceiver).updateData({'money': userReceiver.money + money});
 
     Navigator.pop(context);
   }

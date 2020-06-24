@@ -8,6 +8,7 @@ class TransactionModel {
   final int money;
   final Timestamp time;
   final String typeTransaction;
+  final String pushToken;
 
   TransactionModel(
       {this.id,
@@ -16,7 +17,8 @@ class TransactionModel {
       this.state,
       this.money,
       this.time,
-      this.typeTransaction});
+      this.typeTransaction,
+      this.pushToken});
 
   factory TransactionModel.fromDoc(DocumentSnapshot doc) {
     return TransactionModel(
@@ -27,6 +29,7 @@ class TransactionModel {
       money: doc['money'],
       time: doc['time'],
       typeTransaction: doc['typeTransaction'],
+      pushToken: doc['pushToken'],
     );
   }
 }

@@ -7,8 +7,9 @@ class User {
   final String phone;
   final String email;
   final String pin;
+  final String pushToken;
 
-  User({this.id, this.email, this.name, this.money, this.phone, this.pin});
+  User({this.id, this.email, this.name, this.money, this.phone, this.pin, this.pushToken});
 
   factory User.fromDoc(DocumentSnapshot document) {
     return User(
@@ -18,6 +19,7 @@ class User {
       money: document['money'],
       phone: document['phone'],
       pin: document['pin'],
+      pushToken: document['pushToken']
     );
   }
 }

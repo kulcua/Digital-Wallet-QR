@@ -1,11 +1,18 @@
+import 'dart:convert';
+import 'dart:io' show Platform;
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/screens/transfer.dart';
 import 'package:moneymangement/screens/user_page.dart';
+import 'package:moneymangement/utilities/constants.dart';
 import 'history_page.dart';
 import 'mainpage.dart';
 import 'setting_page.dart';
@@ -22,23 +29,110 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
   PageController _pageController;
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    //configureRealtimePushNoti();
     _pageController = PageController();
+    //showNotification(message);
+    registerNotification();
+    configLocalNotification();
   }
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
+  void showNotification(message) async {
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+      Platform.isAndroid ? 'com.dfa.flutterchatdemo' : 'com.duytq.flutterchatdemo',
+      'Flutter chat demo',
+      'your channel description',
+      playSound: true,
+      enableVibration: true,
+      importance: Importance.Max,
+      priority: Priority.High,
+    );
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics =
+    new NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+        0, message['title'].toString(), message['body'].toString(), platformChannelSpecifics,
+        payload: json.encode(message));
   }
+
+  void registerNotification() {
+    firebaseMessaging.requestNotificationPermissions();
+
+    firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
+      print('onMessage: $message');
+      Platform.isAndroid ? showNotification(message['notification']) : showNotification(message['aps']['alert']);
+      return;
+    }, onResume: (Map<String, dynamic> message) {
+      print('onResume: $message');
+      return;
+    }, onLaunch: (Map<String, dynamic> message) {
+      print('onLaunch: $message');
+      return;
+    });
+
+    firebaseMessaging.getToken().then((token) {
+      print('token: $token');
+      usersRef.document(widget.user.id).updateData({'pushToken': token});
+    }).catchError((err) {
+      Fluttertoast.showToast(msg: err.message.toString());
+    });
+  }
+
+  void configLocalNotification() {
+    var initializationSettingsAndroid = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettingsIOS = new IOSInitializationSettings();
+    var initializationSettings = new InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+//  configureRealtimePushNoti() {
+//    if(Platform.isIOS) {
+//      getIOSPermissions();
+//    }
+//    _firebaseMessaging.getToken().then((token) {
+//      usersRef.document(widget.user.id).updateData({"pushToken": token});
+//    });
+//    _firebaseMessaging.configure(
+//      onMessage: (Map<String, dynamic> msg) async {
+//        final String recipientId = msg ["data"]["recipient"];
+//        final String body = msg["notification"]["body"];
+//
+//        if(recipientId == widget.user.id)
+//          {
+//            SnackBar snackBar = SnackBar(
+//              backgroundColor: Colors.grey,
+//              content: Text(body, style: TextStyle(color: Colors.black),overflow: TextOverflow.ellipsis,),
+//            );
+//            _scaffoldKey.currentState.showSnackBar(snackBar);
+//          }
+//      },
+//    );
+//  }
+//
+//  getIOSPermissions(){
+//    _firebaseMessaging.requestNotificationPermissions(IosNotificationSettings(alert: true, badge: true, sound: true));
+//    _firebaseMessaging.onIosSettingsRegistered.listen((settings) {
+//      print("setting register : $settings");
+//    });
+//  }
+
+//  @override
+//  void dispose() {
+//    _pageController.dispose();
+//    super.dispose();
+//  }
 
   @override
   Widget build(BuildContext context) {
     print('home ${widget.user.name}');
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: PageView(

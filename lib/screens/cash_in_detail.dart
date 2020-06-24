@@ -7,6 +7,7 @@ import 'package:moneymangement/models/card_model.dart';
 import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/services/database.dart';
+import 'package:moneymangement/utilities/constants.dart';
 import 'package:moneymangement/utilities/currency.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -41,17 +42,8 @@ class _CashInDetailState extends State<CashInDetail> {
 
     DatabaseService.createTransactionSender(trans);
 
-
-    //receiver
-    User userUpdate = User(
-      id: widget.user.id,
-      name: widget.user.name,
-      money: widget.user.money + money,
-      pin: widget.user.pin,
-    );
-
     // Database update
-    DatabaseService.updateUser(userUpdate);
+    usersRef.document(widget.user.id).updateData({'money':  widget.user.money + money});
 
     Navigator.pushAndRemoveUntil(
       context,

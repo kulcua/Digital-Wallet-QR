@@ -25,6 +25,7 @@ class _SignUpState extends State<SignUp> {
   String phone = '';
   String pin = '0';
   String error = '';
+  String id;
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +118,7 @@ class _SignUpState extends State<SignUp> {
                         dynamic result = await _auth
                             .registerWithEmailAndPassword(
                             context,
+                            id,
                             email,
                             password,
                             name,

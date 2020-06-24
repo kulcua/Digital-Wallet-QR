@@ -7,6 +7,7 @@ import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/screens/result_transaction.dart';
 import 'package:moneymangement/services/database.dart';
+import 'package:moneymangement/utilities/constants.dart';
 import 'package:moneymangement/utilities/currency.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -89,29 +90,8 @@ class _TransferState extends State<Transfer> {
 
     //update money for 2 users
 
-    //sender
-    print('sender money ${widget.user.name}');
-    print('sender money ${widget.user.money}');
-    User userSender = User(
-      id: widget.user.id,
-      name: widget.user.name,
-      money: widget.user.money - money,
-      pin: widget.user.pin,
-    );
-
-    //receiver
-    print('receiver money ${userReceiver.name}');
-    print('receiver money ${userReceiver.money}');
-    userReceiver = User(
-      id: userReceiver.id,
-      name: userReceiver.name,
-      money: userReceiver.money + money,
-      pin: userReceiver.pin,
-    );
-
-    // Database update
-    DatabaseService.updateUser(userSender);
-    DatabaseService.updateUser(userReceiver);
+    usersRef.document(widget.user.id).updateData({'money':  widget.user.money - money});
+    usersRef.document(userReceiver.id).updateData({'money': userReceiver.money + money});
 
     Navigator.pop(context);
   }

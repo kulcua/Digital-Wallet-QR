@@ -15,14 +15,14 @@ class DatabaseService {
     return User();
   }
 
-  static void updateUser(User user) {
-    print('user idddd ${user.id}');
-    usersRef.document(user.id).updateData({
-      'name': user.name,
-      'money': user.money,
-      'pin': user.pin,
-    });
-  }
+//  static void updateUser(User user) {
+//    print('user idddd ${user.id}');
+//    usersRef.document(user.id).updateData({
+//      'name': user.name,
+//      'money': user.money,
+//      'pin': user.pin,
+//    });
+//  }
 
   static void createTransactionSender(TransactionModel trans) {
     // Add user to current user's following collection
@@ -33,6 +33,7 @@ class DatabaseService {
       'money': trans.money,
       'time': trans.time,
       'typeTransaction': trans.typeTransaction,
+      'pushToken': trans.pushToken
     });
   }
 

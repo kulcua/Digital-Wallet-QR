@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/services/database.dart';
+import 'package:moneymangement/utilities/constants.dart';
 import 'package:moneymangement/wrapper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -22,24 +23,25 @@ class _InputPinState extends State<InputPin> {
   bool _isLoading = false;
 
   _submit() async {
-    if (_formKey.currentState.validate() && !_isLoading) {
-      _formKey.currentState.save();
-
-      setState(() {
-        _isLoading = true;
-      });
+    if (_pin.length == 6) {
+      usersRef.document(widget.user.id).updateData({'id': widget.user.id});
+//      _formKey.currentState.save();
+//
+//      setState(() {
+//        _isLoading = true;
+//      });
 
        //Update user in database
-      User user = User(
-        id: widget.user.id,
-        name: widget.user.name,
-        money: widget.user.money,
-        pin: _pin,
-      );
-
-      print('lai la pin $_pin');
+//      User user = User(
+//        id: widget.user.id,
+//        name: widget.user.name,
+//        money: widget.user.money,
+//        pin: _pin,
+//      );
+//
+//      print('lai la pin $_pin');
       // Database update
-      DatabaseService.updateUser(user);
+      usersRef.document(widget.user.id).updateData({'pin': _pin});
 
       print('pin qua home');
       Navigator.push(context,
@@ -81,9 +83,9 @@ class _InputPinState extends State<InputPin> {
                 obsecureText: true,
                 animationType: AnimationType.fade,
                 pinTheme: PinTheme(
-                  selectedColor: Colors.brown,
+                  selectedColor: Colors.black,
                   inactiveColor: Colors.grey,
-                  activeColor: Colors.pink[100],
+                  activeColor: Color(0xff5e63b6),
                   fieldHeight: 50,
                   fieldWidth: 40,
                 ),
@@ -103,7 +105,7 @@ class _InputPinState extends State<InputPin> {
                 "Xác nhận",
                 style: GoogleFonts.muli(
                     textStyle: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     )),
