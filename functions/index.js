@@ -37,7 +37,7 @@ exports.sendNotification = functions.firestore
                     notification: {
                       title: `Bạn vừa nhận tiền từ ${userFrom.data().name}`,
                       body: 'Nhấn để xem chi tiết',
-                      badge: '1',
+                      badge: '1',   
                       sound: 'default'
                     }
                   }

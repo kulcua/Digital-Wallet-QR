@@ -54,7 +54,7 @@ class DatabaseService {
     QuerySnapshot userTransSnapshot = await transactionsRef
         .document(userId)
         .collection('userTrans')
-        .orderBy('time', descending: true).getDocuments();
+        .orderBy('time', descending: true).limit(10).getDocuments();
 
     List<TransactionModel> trans =
     userTransSnapshot.documents.map((doc) => TransactionModel.fromDoc(doc)).toList();

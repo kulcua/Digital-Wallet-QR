@@ -40,53 +40,59 @@ class _MainPageState extends State<MainPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Xin chào,',
-                  style: GoogleFonts.muli(
-                      textStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                  )),
-                ),
-                Text(
-                  user.name,
-                  style: GoogleFonts.muli(
-                    textStyle: TextStyle(
+            Expanded(
+              flex: 7,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Xin chào,',
+                    style: GoogleFonts.muli(
+                        textStyle: TextStyle(
                       color: Colors.black,
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                      fontWeight: FontWeight.w400,
+                    )),
                   ),
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Text(
-                  NumberFormat("#,###","vi").format(user.money),
-                  style: GoogleFonts.muli(
+                  Text(
+                    user.name,
+                    style: GoogleFonts.muli(
                       textStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  )),
-                ),
-                Text(
-                  'VND',
-                  style: GoogleFonts.muli(
-                    textStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Text(
+                    NumberFormat("#,###","vi").format(user.money),
+                    style: GoogleFonts.muli(
+                        textStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                    )),
+                  ),
+                  Text(
+                    'VND',
+                    style: GoogleFonts.muli(
+                      textStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ));

@@ -28,8 +28,14 @@ dependencies:
 
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.7.5
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  image_path: "images/ic_launcher.jpg"
+  android: true
+  ios: true
 
 flutter:
   uses-material-design: true
@@ -40,6 +46,8 @@ fonts:
    - family: Source Sans Pro
      fonts:
        - asset: fonts/SourceSansPro-Regular.ttf
+
+
 
   # To add assets to your application, add an assets section, like this:
 

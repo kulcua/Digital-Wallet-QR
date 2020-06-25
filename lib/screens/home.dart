@@ -13,6 +13,7 @@ import 'package:moneymangement/models/user_model.dart';
 import 'package:moneymangement/screens/transfer.dart';
 import 'package:moneymangement/screens/user_page.dart';
 import 'package:moneymangement/utilities/constants.dart';
+import '../wrapper.dart';
 import 'history_page.dart';
 import 'mainpage.dart';
 import 'setting_page.dart';
@@ -30,7 +31,8 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   PageController _pageController;
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -45,7 +47,9 @@ class _HomeState extends State<Home> {
 
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-      Platform.isAndroid ? 'com.dfa.flutterchatdemo' : 'com.duytq.flutterchatdemo',
+      Platform.isAndroid
+          ? 'com.dfa.flutterchatdemo'
+          : 'com.duytq.flutterchatdemo',
       'Flutter chat demo',
       'your channel description',
       playSound: true,
@@ -54,10 +58,10 @@ class _HomeState extends State<Home> {
       priority: Priority.High,
     );
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
-    var platformChannelSpecifics =
-    new NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        0, message['title'].toString(), message['body'].toString(), platformChannelSpecifics,
+    var platformChannelSpecifics = new NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
+        message['body'].toString(), platformChannelSpecifics,
         payload: json.encode(message));
   }
 
@@ -66,7 +70,49 @@ class _HomeState extends State<Home> {
 
     firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
       print('onMessage: $message');
-      Platform.isAndroid ? showNotification(message['notification']) : showNotification(message['aps']['alert']);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Thông báo',
+              style: GoogleFonts.muli(
+                  textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ))),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Text(message['notification']['title'],
+                    style: GoogleFonts.muli(
+                        textStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ))),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Đóng',
+                  style: GoogleFonts.muli(
+                      textStyle: TextStyle(
+                    color: Color(0xff5e63b6),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                  ))),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => Wrapper()),
+                  (Route<dynamic> route) => false,
+                );
+              }, //=> Navigator.of(context).pop(),
+            )
+          ],
+        ),
+      );
+      //Platform.isAndroid ? showNotification(message['notification']) : showNotification(message['aps']['alert']);
       return;
     }, onResume: (Map<String, dynamic> message) {
       print('onResume: $message');
@@ -85,9 +131,11 @@ class _HomeState extends State<Home> {
   }
 
   void configLocalNotification() {
-    var initializationSettingsAndroid = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettingsAndroid =
+        new AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettingsIOS = new IOSInitializationSettings();
-    var initializationSettings = new InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
+    var initializationSettings = new InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
@@ -147,7 +195,9 @@ class _HomeState extends State<Home> {
             History(
               user: widget.user,
             ),
-            UserPage(user: widget.user,),
+            UserPage(
+              user: widget.user,
+            ),
             Setting(),
           ],
         ),
