@@ -212,50 +212,50 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-              icon: Icon(Icons.home, color: Colors.black),
+              icon: Icon(Icons.home, color:  Color(0xff5e63b6)),
               title: Text(
                 'Trang chủ',
                 style: GoogleFonts.muli(
                     textStyle: TextStyle(
-                  color: Colors.black,
+                  color:  Color(0xff5e63b6),
                   fontSize: 15,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 )),
               ),
               activeColor: Colors.white),
           BottomNavyBarItem(
-              icon: Icon(Icons.access_time, color: Colors.black),
+              icon: Icon(Icons.access_time, color:  Color(0xff5e63b6)),
               title: Text(
                 'Giao dịch',
                 style: GoogleFonts.muli(
                     textStyle: TextStyle(
-                  color: Colors.black,
+                  color:  Color(0xff5e63b6),
                   fontSize: 15,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 )),
               ),
               activeColor: Colors.white),
           BottomNavyBarItem(
-              icon: Icon(Icons.account_circle, color: Colors.black),
+              icon: Icon(Icons.account_circle, color:  Color(0xff5e63b6)),
               title: Text(
                 'Tài khoản',
                 style: GoogleFonts.muli(
                     textStyle: TextStyle(
-                  color: Colors.black,
+                  color:  Color(0xff5e63b6),
                   fontSize: 15,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 )),
               ),
               activeColor: Colors.white),
           BottomNavyBarItem(
-              icon: Icon(Icons.settings, color: Colors.black),
+              icon: Icon(Icons.settings,  color: Color(0xff5e63b6)),
               title: Text(
                 'Cài đặt',
                 style: GoogleFonts.muli(
                     textStyle: TextStyle(
-                  color: Colors.black,
+                  color: Color(0xff5e63b6),
                   fontSize: 15,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 )),
               ),
               activeColor: Colors.white),

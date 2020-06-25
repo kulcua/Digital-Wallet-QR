@@ -35,7 +35,7 @@ exports.sendNotification = functions.firestore
                   console.log(`Found user from: ${userFrom.data().name}`)
                   const payload = {
                     notification: {
-                      title: `Bạn vừa nhận tiền từ ${userFrom.data().name}`,
+                      title: `Bạn vừa nhận được ${doc.money} từ ${userFrom.data().name}`,
                       body: 'Nhấn để xem chi tiết',
                       badge: '1',   
                       sound: 'default'
