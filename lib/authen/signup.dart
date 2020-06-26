@@ -86,7 +86,9 @@ class _SignUpState extends State<SignUp> {
                   margin: EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 25.0),
                   child: TextFormField(
+                    maxLength: 45,
                     decoration: InputDecoration(
+                      counterText: '',
                       border: OutlineInputBorder(),
                       labelText: 'Tên của bạn',
                     ),
