@@ -1,14 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:moneymangement/models/transaction_model.dart';
 import 'package:moneymangement/models/user_model.dart';
-import 'package:moneymangement/screens/result_transaction.dart';
 import 'package:moneymangement/services/database.dart';
-import 'package:moneymangement/utilities/constants.dart';
 import 'package:moneymangement/utilities/tran_tile.dart';
-import 'package:provider/provider.dart';
 
 class History extends StatefulWidget {
   final User user;

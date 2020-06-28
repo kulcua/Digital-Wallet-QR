@@ -34,7 +34,11 @@ class _AddCardState extends State<AddCard> {
 
     DatabaseService.createCard(card, widget.user.id);
 
-    Navigator.push(context,MaterialPageRoute(builder: (context)=> CardManagement(user: widget.user,)));
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => CardManagement(user: widget.user,)),
+          (Route<dynamic> route) => false,
+    );
   }
 
   void onCreditCardModelChange(CreditCardModel creditCardModel) {

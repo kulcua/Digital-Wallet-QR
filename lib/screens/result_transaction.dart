@@ -139,9 +139,6 @@ class _ResultTransactionState extends State<ResultTransaction> {
               color: Color(0xff5e63b6),
               onPressed: ()
               {
-//                Navigator.popUntil(context, ModalRoute.withName('/wrapper'));
-//                Navigator.pushReplacement(context,
-//                    MaterialPageRoute(builder: (context) => Wrapper()));
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => Wrapper()),

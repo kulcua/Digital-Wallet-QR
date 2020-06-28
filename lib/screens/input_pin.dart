@@ -20,26 +20,10 @@ class _InputPinState extends State<InputPin> {
 
   final _formKey = GlobalKey<FormState>();
   String _pin = '';
-  bool _isLoading = false;
 
   _submit() async {
     if (_pin.length == 6) {
       usersRef.document(widget.user.id).updateData({'id': widget.user.id});
-//      _formKey.currentState.save();
-//
-//      setState(() {
-//        _isLoading = true;
-//      });
-
-       //Update user in database
-//      User user = User(
-//        id: widget.user.id,
-//        name: widget.user.name,
-//        money: widget.user.money,
-//        pin: _pin,
-//      );
-//
-//      print('lai la pin $_pin');
       // Database update
       usersRef.document(widget.user.id).updateData({'pin': _pin});
 
@@ -61,7 +45,7 @@ class _InputPinState extends State<InputPin> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
-                'Nhập mã PIN',
+                'Vui lòng thiết lập mã PIN',
                 style: GoogleFonts.muli(
                     textStyle: TextStyle(
                   color: Colors.black,

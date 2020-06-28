@@ -39,7 +39,7 @@ class _CashOutDetailState extends State<CashOutDetail> {
       typeTransaction: 'Nap tien',
     );
 
-    DatabaseService.createTransactionSender(trans);
+    //DatabaseService.createTransactionSender(trans);
 
     // Database update
     usersRef.document(widget.user.id).updateData({'money':  widget.user.money - money});

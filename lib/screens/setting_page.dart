@@ -63,12 +63,15 @@ class _SettingState extends State<Setting> {
               ),
               selected: _selectedOption == index - 1,
               onTap: () async {
-                if (_selectedOption == 5) {
-                  await _auth.signOut();
-                }
                 setState(() {
                   _selectedOption = index - 1;
                 });
+                if (_selectedOption == index -1) {
+                  if(_selectedOption == 5)
+                    {
+                      await _auth.signOut();
+                    }
+                }
               },
             ),
           );

@@ -35,12 +35,12 @@ class _TransferState extends State<Transfer> {
 
   _verifyPin() {
     print('verify pin');
-    if (_formKey.currentState.validate() && !_isLoading) {
-      _formKey.currentState.save();
-
-      setState(() {
-        _isLoading = true;
-      });
+//    if (_formKey.currentState.validate() && !_isLoading) {
+//      _formKey.currentState.save();
+//
+//      setState(() {
+//        _isLoading = true;
+//      });
 
       if (_pin == widget.user.pin) {
         print('vo submit');
@@ -61,7 +61,7 @@ class _TransferState extends State<Transfer> {
         print('da qua result');
       } else
         _checkPin = true;
-    }
+    //}
   }
 
   String _resultPin() {
@@ -85,8 +85,8 @@ class _TransferState extends State<Transfer> {
       typeTransaction: 'Chuyển tiền',
     );
 
+    DatabaseService.createTransactionSender(trans);
     DatabaseService.createTransactionReceiver(trans);
-
 
     //update money for 2 users
 
@@ -94,12 +94,6 @@ class _TransferState extends State<Transfer> {
     usersRef.document(userReceiver.id).updateData({'money': userReceiver.money + money});
 
     Navigator.pop(context);
-  }
-
-  @override
-  void dispose() {
-    _pinHolder.dispose();
-    super.dispose();
   }
 
   @override
@@ -232,17 +226,15 @@ class _TransferState extends State<Transfer> {
                         decoration: InputDecoration(
                           hintText: 'Số điện thoại',
                         ),
-                        onFieldSubmitted: (input) {
-                          print('vo $input');
-                          if (input.isNotEmpty) {
-                            setState(() {
-                              _user = DatabaseService.searchUser(input);
-                            });
-                          }
-                        },
                         onChanged: (val) {
                           setState(() => phone = val);
                           print('phone ne $phone');
+                          if (val.length == 10)
+                            {
+//                              setState(() {
+                                _user = DatabaseService.searchUser(val);
+                              //});
+                            }
                         },
                         validator: (val) {
                           if (val.isEmpty) return 'Hãy nhập số điện thoại';
@@ -254,7 +246,7 @@ class _TransferState extends State<Transfer> {
                     _user == null
                         ? Center(
                     )
-                        : FutureBuilder(
+                        :FutureBuilder(
                       future: _user,
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
@@ -263,6 +255,7 @@ class _TransferState extends State<Transfer> {
                           );
                         }
                         if (snapshot.data.documents.length == 0) {
+                          _user = null;
                           return Text('Không tìm thấy người dùng',
                             style: GoogleFonts.muli(
                                 textStyle: TextStyle(
@@ -353,7 +346,7 @@ class _TransferState extends State<Transfer> {
                     borderRadius: BorderRadius.circular(10.0)),
                 color: Color(0xff5e63b6),
                 onPressed: () async {
-                  if (_formKey.currentState.validate())
+                  if (_formKey.currentState.validate() && _user != null)
                     _showVerifyPasswordPanel();
                 },
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 80.0),

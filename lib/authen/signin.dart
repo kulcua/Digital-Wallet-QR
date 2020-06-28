@@ -33,7 +33,7 @@ class _SignInState extends State<SignIn> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Chào Bò tui!',
+                'Chào bạn!',
                 style: GoogleFonts.lobster(
                     textStyle: TextStyle(
                   color: Color(0xff5e63b6),
@@ -41,21 +41,8 @@ class _SignInState extends State<SignIn> {
                   fontWeight: FontWeight.w500,
                 )),
               ),
-              Text(
-                '0943523565',
-                style: GoogleFonts.muli(
-                    textStyle: TextStyle(
-                  color: Color(0xff5e63b6),
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
-              ),
               SizedBox(
                 height: 20.0,
-                width: 150.0,
-                child: Divider(
-                  color: Color(0xff5e63b6),
-                ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
