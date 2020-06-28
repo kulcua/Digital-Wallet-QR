@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moneymangement/models/user.dart';
 import 'package:moneymangement/push_notification.dart';
+import 'package:moneymangement/screens/splash_screen.dart';
 import 'package:moneymangement/services/auth.dart';
 import 'package:moneymangement/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<UserData>.value(
       value: AuthServices().user,
       child: MaterialApp(
-        home: Wrapper(),
+        home: SplashScreen(),
       ),
     );
   }
