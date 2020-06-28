@@ -74,16 +74,27 @@
   <img src="./capture/Screenshot_2020-06-09-22-17-38-538_com.example.moneymanagement.jpg" width="250" />
 </p>
 
+### Cài đặt
+<p align="middle">
+  <img src="./capture/Screenshot_2020-06-29-00-43-56-273_com.example.moneymanagement.jpg" width="250" />
+</p>
+
 ### Các màn hình phụ 
 * Thông báo giao dịch thành công
 <p align="middle">
   <img src="./capture/Screenshot_2020-06-09-22-17-26-891_com.example.moneymanagement.jpg" width="250" />
 </p>
 
+* Thông báo nhận được tiền
+<p align="middle">
+  <img src="./capture/Screenshot_2020-06-29-00-43-40-645_com.example.moneymanagement.jpg" width="250" />
+</p>
+
 * Yêu cầu xác thực mã PIN
 <p align="middle">
   <img src="./capture/Screenshot_2020-06-09-22-18-24-863_com.example.moneymanagement.jpg" width="250" />
 </p>
+
 
 
 ## Yêu cầu thiết bị
