@@ -1,4 +1,4 @@
-# Đây là tên nè
+# DIGITAL WALLET QR
 > Là một ứng dụng thanh toán bằng phương thức quét mã QR với giao diện đơn giản, dễ sử dụng.
 
 ## Nội dung
