@@ -11,8 +11,8 @@
 ### Quản lý tài khoản
 * Đăng nhập
 <p align="middle">
-  <img src="./capture/Screenshot_2020-08-08-21-20-29-029_com.example.moneymanagement.jpg" width="220" />
-  <img src="./capture/Screenshot_2020-08-08-21-20-38-365_com.example.moneymanagement.jpg" width="220" /> 
+  <img src="./capture/Screenshot_2020-08-08-21-20-29-029_com.example.moneymanagement.jpg" width="250" />
+  <img src="./capture/Screenshot_2020-08-08-21-20-38-365_com.example.moneymanagement.jpg" width="250" /> 
 </p>
 
 * Đăng ký
