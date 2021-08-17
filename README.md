@@ -108,5 +108,5 @@
 * Database: Firebase
 
 ## Tác giả
-* Bùi Xuân Nhã - 17520834@gm.uit.edu.vn
-* Nguyễn Thị Kim Phương - 17520927@gm.uit.edu.vn
+* Bùi Xuân Nhã - nhabui137@gmail.com
+* Nguyễn Thị Kim Phương - nguyenphuong9995@gmail.com
